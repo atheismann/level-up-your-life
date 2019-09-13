@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Toy List</h1>
+
+{% for toy in journal_list %}
+  <a href="{% url 'journals_detail' journal.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ journal.name }}</span>
+            <p>Color: {{ journal.color }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}
