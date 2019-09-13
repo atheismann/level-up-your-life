@@ -10,3 +10,4 @@
 [Wireframe](https://docs.google.com/drawings/d/1lz0x3mHJKITkSju0V6-0bmdw9WpmRDj2ktpHfj3ucWo/edit?usp=sharing)
 
 ## Pitch Deck
+[Pitch Deck](https://prezi.com/view/oYGYcBhg8116jjREbPZE/)
