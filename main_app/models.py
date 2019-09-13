@@ -8,3 +8,5 @@ class User(AbstractUser):
   pass
   score = models.IntegerField(default=0)
   level = models.CharField(max_length=100, default='Newbie')
+
+# test
