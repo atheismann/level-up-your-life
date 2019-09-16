@@ -27,21 +27,13 @@ class Journal(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'journal_id': self.id})
 
-class InProgress(models.Model):
-  progress = models.CharField(
-    max_length=1,
-    choices=PROGRESS,
-    default=PROGRESS[0][0]
-  )
-  journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
-
-  def __str__(self):
-    return f"{self.get_journal_display()} on {self.date}"
-
 class Task(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField(max_length=2500)
-  progress = models.CharField(max_length=100)
+  progress = models.CharField(
+    max_length=1,
+    choices=PROGRESS,
+    default=PROGRESS[0][0])
   author = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
