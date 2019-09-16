@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
-from .models import Journal, Post, Task
+from .models import Journal, Post, Task, Attachment
 
 
 # Add the following import
@@ -55,12 +55,12 @@ def add_attachment(request, post_id):
       try:
           s3.upload_fileobj(photo_file, BUCKET, key)
           url = f"{S3_BASE_URL}{BUCKET}/{key}"
-          photo = Photo(url=url, post_id=post_id)
+          photo = Attachment(url=url, post_id=post_id)
           photo.save()
       except:
           print('An error occurred uploading file to S3')
   return redirect('detail', post_id=post_id)
-  
+
 def assoc_post(request, journal_id, post_id):
   Journal.objects.get(id=journal_id).posts.add(post_id)
   return redirect('detail', journal_id=journal_id)
