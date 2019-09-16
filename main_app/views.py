@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView,
+from django.views.generic.edit import CreateView
 from .models import Journal
 
 # Add the following import
