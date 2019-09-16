@@ -86,3 +86,21 @@ class PostUpdate(UpdateView):
 class PostDelete(DeleteView):
   model = Post
   success_url = '/posts/'
+
+class TaskCreate(CreateView):
+  model = Task
+  fields = '__all__'
+
+class TaskUpdate(UpdateView):
+  model = Task
+  fields = ['title', 'progress', 'author']
+
+class TaskDelete(DeleteView):
+  model = Task
+  success_url = '/tasks/'
+
+class TaskList(ListView):
+  model = Task
+
+class TaskDetail(DetailView):
+  model = Task
