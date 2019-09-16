@@ -18,7 +18,7 @@ def home(request):
 
 class JournalCreate(CreateView):
   model = Journal
-  fields = ['title', 'author', 'about']
+  fields = ['title', 'about']
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)

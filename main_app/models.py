@@ -25,7 +25,7 @@ class Task(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField(max_length=2500)
   progress = models.CharField(max_length=100)
-  author = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
         return reverse('detail', kwargs={'task_id': self.id})
