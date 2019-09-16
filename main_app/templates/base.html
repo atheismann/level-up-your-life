@@ -28,7 +28,7 @@
               {% if user.is_authenticated %}
                 <li><a href="{% url 'task_create' %}">Add Task</a></li>   
                 <li><a href="{% url 'task_index' %}">Taks</a></li>
-                <li><a href="{% url 'Journal_create' %}">Journals</a></li>
+                <li><a href="{% url 'journal_create' %}">Journals</a></li>
                 <li><a href="{% url 'index' %}">View All My Journals</a></li> 
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
               {% else %}
