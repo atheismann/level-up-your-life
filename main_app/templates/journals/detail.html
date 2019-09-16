@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
+
 <h1>Journals Details</h1>
+
+    <li>Hi, {{ user.get_short_name }}</li>
+
+    <li><a href="{% url 'Journal_create' %}">Journals</a></li>
+
+
+<!-- this is where you are going to render the rest of the page -->
 
 <!-- JS to create a date picker and init the meal dropdown -->
 <script>

@@ -19,17 +19,15 @@
             <ul>
               <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Level up your life</a></li>
               <a href="#" class="sidenav-trigger" data-target="mobile-links">
-                <i class="material-icons">menu</i>
+                <i class="material-icons right-">menu</i>
               </a>
             </ul>
             <!-- hide the links -->
             <ul class="right hide-on-med-and-down">
               <li><a href="{% url 'about' %}">About</a></li>
-              {% if user.is_authenticated %}
-                <li><a href="{% url 'task_create' %}">Add Task</a></li>   
-                <li><a href="{% url 'task_index' %}">Taks</a></li>
-                <li><a href="{% url 'journal_create' %}">Journals</a></li>
-                <li><a href="{% url 'index' %}">View All My Journals</a></li> 
+              {% if user.is_authenticated %}   
+                <li><a href="{% url 'task_index' %}">Tasks</a></li>
+                <li><a href="{% url 'index' %}">Journals</a></li> 
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
               {% else %}
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -40,12 +38,15 @@
         </div>
       </nav>
       <ul class="sidenav" id="mobile-links">
-        <li><a href="{% url 'signup' %}">Sign Up</a></li>
-        <li><a href="{% url 'task_create' %}">Add Task</a></li>   
-        <li><a href="{% url 'task_index' %}">Taks</a></li>
-        <li><a href="{% url 'journal_create' %}">Journals</a></li>
-        <li><a href="{% url 'index' %}">View All My Journals</a></li> 
-        <li><a href="{% url 'logout' %}">Log Out</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        {% if user.is_authenticated %}   
+          <li><a href="{% url 'task_index' %}">Tasks</a></li>
+          <li><a href="{% url 'index' %}">Journals</a></li> 
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
+        {% else %}
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
+        {% endif %}
       </ul>
     </header>
   </body>
