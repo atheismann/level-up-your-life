@@ -2,22 +2,19 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 from .models import Journal, Post, Task, Attachment
-
-
-# Add the following import
-from django.http import HttpResponse
+from .forms import SignupForm
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
 BUCKET = 'levelupyourlife-aplha'
+
 # Define the home view
 def home(request):
-  return HttpResponse('<h1>Welcome to Level Up Your Life!</h1>')
+  return render(request, 'home.html')
 
 class JournalCreate(CreateView):
   model = Journal
@@ -104,3 +101,17 @@ class TaskList(ListView):
 
 class TaskDetail(DetailView):
   model = Task
+
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    form = SignupForm(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  form = SignupForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
