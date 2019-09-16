@@ -6,7 +6,7 @@
 <li><a href="{% url 'task_create' %}">Add Task</a></li> 
 
 {% for task in task_list %}
-  <a href="{% url 'tasks_detail' task.id %}">
+  <a href="{% url 'task_detail' task.id %}">
     <div class="card">
         <div class="card-content">
             <span class="card-title">{{ task.name }}</span>
