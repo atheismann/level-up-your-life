@@ -4,8 +4,8 @@ from . import views
 urlpatterns = [
   path('', views.home, name='home'),
   path('about/', views.about, name='about'),
-  path('journals/create/', views.JournalCreate.as_view(), name='journal_create'),
   path('journals/', views.journals_index, name='index'),
+  path('journals/create/', views.JournalCreate.as_view(), name='journal_create'),
   path('journals/<int:journal_id>/', views.journals_detail, name='detail'),
   path('journals/<int:pk>/update/', views.JournalUpdate.as_view(), name='journal_update'),
   path('journals/<int:pk>/delete/', views.JournalDelete.as_view(), name='journal_delete'),
@@ -21,4 +21,5 @@ urlpatterns = [
   path('tasks/create/', views.TaskCreate.as_view(), name='task_create'),
   path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name='task_update'),
   path('tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='task_delete'),
+  path('accounts/signup', views.signup, name='signup'),
 ]
