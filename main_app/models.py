@@ -1,6 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from datetime import date
+
 
 # Create your models here.
 class User(AbstractUser):
@@ -19,6 +21,11 @@ class Journal(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'journal_id': self.id})
 
+class Task(models.Model):
+  title = models.CharField(max_length=100)
+  progress = models.CharField(max_length=100)
+  author = models.ForeignKey(User, on_delete=models.CASCADE)
+
 class Post(models.Model):
   name = models.CharField(max_length=250)
   date = models.DateField(default=date.today)
@@ -27,7 +34,3 @@ class Post(models.Model):
   tasks = models.ManyToManyField(Task)
   likes = models.ManyToManyField(User)
 
-class Task(models.Model):
-  title = models.CharField(max_length=100)
-  progress = models.CharField(max_length=100)
-  author = models.ForeignKey(User, on_delete=models.CASCADE)
