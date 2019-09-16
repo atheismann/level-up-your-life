@@ -32,7 +32,6 @@ class Post(models.Model):
   content = models.TextField(max_length=2500)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   tasks = models.ManyToManyField(Task)
-  likes = models.ManyToManyField(User)
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
