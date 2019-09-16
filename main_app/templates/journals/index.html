@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Journals List</h1>
+<h1>Journal List</h1>
 
-{% for toy in journal_list %}
-  <a href="{% url 'journals_detail' journal.id %}">
+{% for journal in journals %}
+  <a href="{% url 'detail' journal.id %}">
     <div class="card">
         <div class="card-content">
             <span class="card-title">{{ journal.name }}</span>
-            <p>Color: {{ journal.color }}</p>
+            
+            <p>Description: {{ journal.description }}</p>
+
         </div>
     </div>
   </a>
