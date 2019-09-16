@@ -34,3 +34,6 @@ def journals_detail(request, journal_id):
   return render(request, 'journals/detail.html', {
     'journal': journal,
   })
+
+def about(request):
+  return render(request, 'about.html')
