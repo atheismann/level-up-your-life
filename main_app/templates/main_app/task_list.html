@@ -3,6 +3,8 @@
 
 <h1>Task List</h1>
 
+<li><a href="{% url 'task_create' %}">Add Task</a></li> 
+
 {% for task in task_list %}
   <a href="{% url 'tasks_detail' task.id %}">
     <div class="card">
