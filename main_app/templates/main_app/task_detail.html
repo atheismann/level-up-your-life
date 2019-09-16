@@ -11,8 +11,8 @@
         <p>Description: {{ task.description }}</p>
       </div>
       <div class="card-action">
-        <a href="{% url 'tasks_update' task.id %}">Edit</a>
-        <a href="{% url 'tasks_delete' task.id %}">Delete</a>
+        <a href="{% url 'task_update' task.id %}">Edit</a>
+        <a href="{% url 'task_delete' task.id %}">Delete</a>
       </div>
     </div>
   </div>
