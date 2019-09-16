@@ -3,6 +3,12 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from datetime import date
 
+PROGRESS = (
+    ('N', 'New'),
+    ('I', 'In Progress'),
+    ('C', 'Completed')
+)
+
 
 # Create your models here.
 class User(AbstractUser):
@@ -24,8 +30,11 @@ class Journal(models.Model):
 class Task(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField(max_length=2500)
-  progress = models.CharField(max_length=100)
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  progress = models.CharField(
+    max_length=1,
+    choices=PROGRESS,
+    default=PROGRESS[0][0])
+  author = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
         return reverse('detail', kwargs={'task_id': self.id})
