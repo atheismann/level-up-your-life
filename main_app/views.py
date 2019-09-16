@@ -75,7 +75,7 @@ class PostList(ListView):
 class PostDetail(DetailView):
   model = Post
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreate(CreateView):
   model = Post
   fields = '__all__'
 
