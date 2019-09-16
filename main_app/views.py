@@ -76,6 +76,10 @@ class PostCreate(CreateView):
   model = Post
   fields = '__all__'
 
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
 class PostUpdate(UpdateView):
   model = Post
   fields = ['name', 'date', 'content', 'tasks', 'likes']
@@ -86,11 +90,15 @@ class PostDelete(DeleteView):
 
 class TaskCreate(CreateView):
   model = Task
-  fields = '__all__'
+  fields = ['title', 'description', 'progress']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
 
 class TaskUpdate(UpdateView):
   model = Task
-  fields = ['title', 'progress', 'author']
+  fields = ['title', 'description', 'progress']
 
 class TaskDelete(DeleteView):
   model = Task
