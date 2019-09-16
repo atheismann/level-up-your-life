@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Toy List</h1>
+<h1>Journals List</h1>
 
 {% for toy in journal_list %}
   <a href="{% url 'journals_detail' journal.id %}">
