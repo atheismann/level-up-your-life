@@ -21,7 +21,7 @@ DAYS = (
 )
 
 class Workout(models.Model):
-  workoutType = models.CharField(max_length=250)
+  workout = models.CharField(max_length=250)
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,
