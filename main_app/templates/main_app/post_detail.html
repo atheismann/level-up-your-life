@@ -54,44 +54,62 @@
 {% comment %} two columns task,  {% endcomment %}
  {% comment %} button inprogress {% endcomment %}
 
-<div class="row">
-  <div class="col s12 l6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ assignedtasks }}</span>
-          {% if post.task %}
-            {% for task in post.task.all %}
-              {{ task.title }}
-              {{ task.description }}<
-              {{ task.get_importance_display }}
-          {% else post.workout %}
-            {% for workout in post.workout.all %}
-              {{ workout.workoutType}}
-          {% endif %}
-      </div>
-    </div>
+
+  <div class="col s12">
+    <span class="card-title">{{ assignedtasks }}</span>
+
+        {% for tasks in tasks_list %}
+          <a href="{% url 'tasks_detail' tasks.id %}">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ tasks.title }}</span>
+                    <p>Description: {{ task.description }}</p>
+                    <p>Importance: {{ task.get_importance_display }}</p>
+                </div>
+            </div>
+          </a>
+        {% endfor %}
+        
+        {% for workout in workout_list %}
+          <a href="{% url 'workout_detail' workout.id %}">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ workout.title }}</span>
+                    <p>Description: {{ workout.description }}</p>
+                    <p>Importance: {{ workout.get_importance_display }}</p>
+                </div>
+            </div>
+          </a>
+        {% endfor %}
   </div>
 </div>
 
-<div class="row">
-  <div class="col s12 l6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ completedtasks }}</span>
-          {% if post.task %}
-            {% for task in post.task.all %}
-              {{ task.title }}
-              {{ task.description }}<
-              {{ task.get_importance_display }}
-          {% else post.workout %}
-            {% for workout in post.workout.all %}
-              {{ workout.workoutType}}
-          {% endif %}
-      </div>
-    </div>
+  <div class="col s12">
+     <span class="card-title">{{ completedtasks }}</span>
+        {% for tasks in tasks_list %}
+          <a href="{% url 'tasks_detail' tasks.id %}">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ tasks.title }}</span>
+                    <p>Description: {{ task.description }}</p>
+                    <p>Importance: {{ task.get_importance_display }}</p>
+                </div>
+            </div>
+          </a>
+        {% endfor %}
+        
+        {% for workout in workout_list %}
+          <a href="{% url 'workout_detail' workout.id %}">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ workout.title }}</span>
+                    <p>Description: {{ workout.description }}</p>
+                    <p>Importance: {{ workout.get_importance_display }}</p>
+                </div>
+            </div>
+          </a>
+        {% endfor %}
   </div>
-</div>
-
 
 
 {% endblock %}
