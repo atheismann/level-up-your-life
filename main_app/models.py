@@ -50,6 +50,9 @@ class Task(models.Model):
 
   def get_absolute_url(self):
     return reverse('task_detail', kwargs={'pk': self.id}) 
+  
+  def __str__(self):
+    return f"{self.get_progress_display()} on {self.title}"
 
 class Post(models.Model):
   name = models.CharField(max_length=250)
