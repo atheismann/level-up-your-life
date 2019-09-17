@@ -49,9 +49,9 @@ class Post(models.Model):
   date = models.DateField(default=date.today)
   content = models.TextField(max_length=2500)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
-  assignedtasks = models.ManyToManyField(Task)
-  completedtasks = models.ManyToManyField(Task)
-  inprogresstasks = models.ManyToManyField(Task)
+  assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
+  completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
+  inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
