@@ -9,7 +9,13 @@ PROGRESS = (
     ('C', 'Completed')
 )
 
-# Create your models here.
+IMPORTANCE = (
+    ('L', 'Low Importance'),
+    ('M', 'Medium Importance'),
+    ('H', 'High Importance')
+)
+
+
 class User(AbstractUser):
   pass
   score = models.IntegerField(default=0)
@@ -34,6 +40,12 @@ class Task(models.Model):
     choices=PROGRESS,
     default=PROGRESS[0][0],
     )
+  importance = models.CharField(
+    max_length=1,
+    choices=IMPORTANCE,
+    default=IMPORTANCE[0][0],
+  )
+
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
