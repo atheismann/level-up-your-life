@@ -179,11 +179,25 @@ def assoc_completedtasks(request, post_id, task_id):
 def unassoc_completedtasks(request, post_id, task_id):
   Post.objects.get(id=post_id).tasks.remove(task_id)
   return redirect('post_detail', post_id=post_id)
-  
-def assoc_inprogresstasks(request, post_id, task_id):
-  Post.objects.get(id=post_id).tasks.add(task_id)
+
+###################################################################
+def assoc_assignedworkout(request, post_id, workout_id):
+  Workout.objects.get(id=post_id).workouts.add(workout_id)
   return redirect('post_detail', post_id=post_id)
 
-def unassoc_inprogresstasks(request, post_id, task_id):
-  Post.objects.get(id=post_id).tasks.remove(task_id)
+def unassoc_assignedworkout(request, post_id, workout_id):
+  Workout.objects.get(id=post_id).workouts.remove(workout_id)
   return redirect('post_detail', post_id=post_id)
+  
+def assoc_completedworkout(request, post_id, workout_id):
+  Workout.objects.get(id=post_id).workouts.add(workout_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_completedworkout(request, post_id, workout_id):
+  Workout.objects.get(id=post_id).workouts.remove(workout_id)
+  return redirect('post_detail', post_id=post_id)
+
+
+
+
+
