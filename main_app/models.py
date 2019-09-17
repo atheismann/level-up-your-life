@@ -10,9 +10,9 @@ PROGRESS = (
 )
 
 IMPORTANCE = (
-    ('L', 'Low Importance'),
-    ('M', 'Medium Importance'),
-    ('H', 'High Importance')
+    ('1', 'Low Importance'),
+    ('3', 'Medium Importance'),
+    ('5', 'High Importance')
 )
 
 
@@ -43,7 +43,7 @@ class Task(models.Model):
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,
-    default=IMPORTANCE[0][0],
+    default=IMPORTANCE[0][1],
   )
 
   user = models.ForeignKey(User, on_delete=models.CASCADE)

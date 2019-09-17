@@ -86,7 +86,7 @@ class PostDelete(DeleteView):
 
 class TaskCreate(CreateView):
   model = Task
-  fields = ['title', 'description', 'progress']
+  fields = ['title', 'description', 'importance', 'progress']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
@@ -94,7 +94,7 @@ class TaskCreate(CreateView):
 
 class TaskUpdate(UpdateView):
   model = Task
-  fields = ['title', 'description', 'progress']
+  fields = ['title', 'description', 'importance', 'progress']
 
 class TaskDelete(DeleteView):
   model = Task
