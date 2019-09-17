@@ -37,16 +37,6 @@ class JournalDelete(DeleteView):
   model = Journal
   success_url = '/journals/'
 
-# def journals_index(request):
-#   journals = Journal.objects.all()
-#   return render(request, 'journals/index.html', { 'journals': journals })
-
-# def journals_detail(request, journal_id):
-#   journal = Journal.objects.get(id=journal_id)
-#   return render(request, 'journals/detail.html', {
-#     'journal': journal,
-#   })
-
 def about(request):
   return render(request, 'about.html')
 
