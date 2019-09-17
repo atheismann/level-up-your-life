@@ -32,14 +32,10 @@ class Workout(models.Model):
     return reverse('workout_detail', kwargs={'pk': self.id})
 
 class MealPlan(models.Model):
+  name = models.CharField(max_length=50)
   breakfast = models.CharField(max_length=50)
   lunch = models.CharField(max_length=50)
   dinner = models.CharField(max_length=50)
-  importance = models.CharField(
-    max_length=1,
-    choices=IMPORTANCE,
-    default=IMPORTANCE[0][1],
-  )
 
   def get_absolute_url(self):
     return reverse('mealplan_detail', kwargs={'pk': self.id})
@@ -83,6 +79,7 @@ class Task(models.Model):
 
 class Post(models.Model):
   date = models.DateField(default=date.today)
+  mealplan = models.ForeignKey(MealPlan, on_delete=models.CASCADE)
   day = models.CharField(
     max_length=1,
     choices=DAYS,
@@ -91,7 +88,8 @@ class Post(models.Model):
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
-  inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
+  assignedworkout = models.ManyToManyField(Workout, related_name="assignedWorkout")
+  completedworkout = models.ManyToManyField(Workout, related_name="completedWorkout")
   
 
   def get_absolute_url(self):
