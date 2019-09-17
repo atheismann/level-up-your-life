@@ -10,6 +10,16 @@ IMPORTANCE = (
     ('5', 'High Importance')
 )
 
+DAYS = (
+    ('1', 'Sunday'),
+    ('2', 'Monday'),
+    ('3', 'Tuesday'),
+    ('4', 'Wednesday'),
+    ('5', 'Thursday'),
+    ('6', 'Friday'),
+    ('7', 'Saturday'),
+)
+
 class Workout(models.Model):
   workoutType = models.CharField(max_length=250)
 
@@ -63,11 +73,16 @@ class Task(models.Model):
 
 class Post(models.Model):
   date = models.DateField(default=date.today)
-  day = models.CharField(max_length=10)
+  day = models.CharField(
+    max_length=1,
+    choices=DAYS,
+    default=DAYS[0][0],
+  )
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
   inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
+  
 
   def get_absolute_url(self):
     return reverse('post_detail', kwargs={'pk': self.id}) 
