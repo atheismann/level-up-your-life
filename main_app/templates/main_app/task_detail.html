@@ -10,7 +10,8 @@
         <span class="card-title">{{ task.name }}</span>
         <p>Title: {{ task.title }}</p>
         <p>Description: {{ task.description }}</p>
-        <p>progress: {{ task.progress }}</p>
+        <p>Importance: {{ task.get_importance_display }}</p>
+        <p>Progress: {{ task.get_progress_display }}</p>
       </div>
       <div class="card-action">
         <a href="{% url 'task_update' task.id %}">Edit</a>

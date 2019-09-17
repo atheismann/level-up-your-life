@@ -37,16 +37,6 @@ class JournalDelete(DeleteView):
   model = Journal
   success_url = '/journals/'
 
-# def journals_index(request):
-#   journals = Journal.objects.all()
-#   return render(request, 'journals/index.html', { 'journals': journals })
-
-# def journals_detail(request, journal_id):
-#   journal = Journal.objects.get(id=journal_id)
-#   return render(request, 'journals/detail.html', {
-#     'journal': journal,
-#   })
-
 def about(request):
   return render(request, 'about.html')
 
@@ -96,7 +86,7 @@ class PostDelete(DeleteView):
 
 class TaskCreate(CreateView):
   model = Task
-  fields = ['title', 'description', 'progress']
+  fields = ['title', 'description', 'importance', 'progress']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
@@ -104,7 +94,7 @@ class TaskCreate(CreateView):
 
 class TaskUpdate(UpdateView):
   model = Task
-  fields = ['title', 'description', 'progress']
+  fields = ['title', 'description', 'importance', 'progress']
 
 class TaskDelete(DeleteView):
   model = Task
@@ -129,3 +119,27 @@ def signup(request):
   form = SignupForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+def assoc_assignedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.add(task_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_assignedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.remove(task_id)
+  return redirect('post_detail', post_id=post_id)
+  
+def assoc_completedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.add(task_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_completedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.remove(task_id)
+  return redirect('post_detail', post_id=post_id)
+  
+def assoc_inprogresstasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.add(task_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_inprogresstasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.remove(task_id)
+  return redirect('post_detail', post_id=post_id)
