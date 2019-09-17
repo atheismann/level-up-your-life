@@ -52,7 +52,7 @@ class Journal(models.Model):
   about = models.TextField(max_length=2500)
 
   def __str__(self):
-    return self.name
+    return self.title
 
   def get_absolute_url(self):
     return reverse('journal_detail', kwargs={'pk': self.id}) 
@@ -79,7 +79,7 @@ class Task(models.Model):
 
 class Post(models.Model):
   date = models.DateField(default=date.today)
-  mealplan = models.ForeignKey(MealPlan, on_delete=models.CASCADE)
+  mealplan = models.ManyToManyField(MealPlan)
   day = models.CharField(
     max_length=1,
     choices=DAYS,
@@ -91,6 +91,9 @@ class Post(models.Model):
   assignedworkout = models.ManyToManyField(Workout, related_name="assignedWorkout")
   completedworkout = models.ManyToManyField(Workout, related_name="completedWorkout")
   
+
+  def get_absolute_url(self):
+    return reverse('post_detail', kwargs={'pk': self.id}) 
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
