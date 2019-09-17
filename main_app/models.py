@@ -32,12 +32,8 @@ class Task(models.Model):
   progress = models.CharField(
     max_length=1,
     choices=PROGRESS,
-<<<<<<< HEAD
-    default=PROGRESS[0][0])
-=======
     default=PROGRESS[0][0],
     )
->>>>>>> 8e3a69350831329e4019bda7c9193f8ea2fe04ab
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
