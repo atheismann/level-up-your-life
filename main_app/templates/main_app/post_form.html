@@ -1,3 +1,5 @@
+<!-- displaying post/create -->
+
 {% block content %}
   {% if object %}
     <h1>Edit <span class="teal-text">{{object.name}}</span></h1>
@@ -10,7 +12,7 @@
     {% csrf_token %}
     <table>
       <!-- Render the inputs inside of <tr>s & <td>s -->
-      {{ form.as_table }}
+      {{ post.as_table }}
     </table>
     <input type="submit" value="Submit!" class="btn">
   </form>

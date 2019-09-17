@@ -8,7 +8,9 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title">{{ post.name }}</span>
+        <p>Date: {{ date.description }}</p>
         <p>Description: {{ post.description }}</p>
+        <p>Task: {{ task.description }}</p>        
       </div>
       <div class="card-action">
         <a href="{% url 'posts_update' post.id %}">Edit</a>

@@ -1,3 +1,6 @@
+<!-- delete page for Task -->
+
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -8,6 +11,6 @@
   <form action="" method="POST">
     {% csrf_token %}
     <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="{% url 'detail' cat.id %}">Cancel</a>
+    <a href="{% url 'detail' journal.id %}">Cancel</a>
   </form>
 {% endblock %}
