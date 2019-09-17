@@ -12,8 +12,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
   <body class="mbody red">
-    <header class="navbar-fixed">
-
+    <header>
+      <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper light-blue">
           <div class="container">
@@ -38,7 +38,7 @@
           </div>
         </div>
       </nav>
-
+    </div>
       <ul class="sidenav" id="mobile-links">
         <li><a href="{% url 'about' %}">About</a></li>
         {% if user.is_authenticated %}   
