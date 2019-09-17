@@ -53,6 +53,9 @@ class Task(models.Model):
   
   def __str__(self):
     return f"{self.get_progress_display()} on {self.title}"
+  
+  def __str__(self):
+    return f"{self.get_importance_display()} on {self.title}"
 
 class Post(models.Model):
   name = models.CharField(max_length=250)
