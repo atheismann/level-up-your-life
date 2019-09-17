@@ -10,6 +10,20 @@ IMPORTANCE = (
     ('5', 'High Importance')
 )
 
+class Workout(models.Model):
+  workoutType = models.CharField(max_length=250)
+
+  def get_absolute_url(self):
+    return reverse('workout_detail', kwargs={'pk': self.id})
+
+class MealPlan(models.Model):
+  breakfast = models.CharField(max_length=50)
+  lunch = models.CharField(max_length=50)
+  dinner = models.CharField(max_length=50)
+
+  def get_absolute_url(self):
+    return reverse('mealplan_detail', kwargs={'pk': self.id})
+
 
 class User(AbstractUser):
   pass
@@ -22,7 +36,7 @@ class Journal(models.Model):
   about = models.TextField(max_length=2500)
 
   def __str__(self):
-    return self.name
+    return self.title
 
   def get_absolute_url(self):
     return reverse('journal_detail', kwargs={'pk': self.id}) 
@@ -35,7 +49,7 @@ class Task(models.Model):
     choices=IMPORTANCE,
     default=IMPORTANCE[0][1],
   )
-  
+
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
@@ -48,13 +62,15 @@ class Task(models.Model):
     return f"{self.get_importance_display()} on {self.title}"
 
 class Post(models.Model):
-  name = models.CharField(max_length=250)
   date = models.DateField(default=date.today)
-  content = models.TextField(max_length=2500)
+  day = models.CharField(max_length=10)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
   inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
+
+  def get_absolute_url(self):
+    return reverse('post_detail', kwargs={'pk': self.id}) 
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
