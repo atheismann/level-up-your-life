@@ -119,3 +119,27 @@ def signup(request):
   form = SignupForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+def assoc_assignedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.add(task_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_assignedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.remove(task_id)
+  return redirect('post_detail', post_id=post_id)
+  
+def assoc_completedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.add(task_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_completedtasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.remove(task_id)
+  return redirect('post_detail', post_id=post_id)
+  
+def assoc_inprogresstasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.add(task_id)
+  return redirect('post_detail', post_id=post_id)
+
+def unassoc_inprogresstasks(request, post_id, task_id):
+  Post.objects.get(id=post_id).tasks.remove(task_id)
+  return redirect('post_detail', post_id=post_id)

@@ -3,11 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from datetime import date
 
-PROGRESS = (
-    ('N', 'New'),
-    ('I', 'In Progress'),
-    ('C', 'Completed')
-)
 
 IMPORTANCE = (
     ('1', 'Low Importance'),
@@ -35,17 +30,12 @@ class Journal(models.Model):
 class Task(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField(max_length=2500)
-  progress = models.CharField(
-    max_length=1,
-    choices=PROGRESS,
-    default=PROGRESS[0][0],
-    )
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,
     default=IMPORTANCE[0][1],
   )
-
+  
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
@@ -62,7 +52,9 @@ class Post(models.Model):
   date = models.DateField(default=date.today)
   content = models.TextField(max_length=2500)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
-  tasks = models.ManyToManyField(Task)
+  assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
+  completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
+  inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
