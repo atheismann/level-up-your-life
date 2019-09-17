@@ -24,7 +24,7 @@ nav .badge{
     display: grid;
     grid-template-columns: 500px;
     grid-gap: 10px;
-    height: 100px;
+    height: 250px;
     background-color: white;
     padding: 10px;
 }
