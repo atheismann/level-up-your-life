@@ -11,6 +11,7 @@ urlpatterns = [
   path('journals/<int:pk>/delete/', views.JournalDelete.as_view(), name='journal_delete'),
   path('journals/<int:journal_id>/assoc_post/<int:post_id>/', views.assoc_post, name='assoc_post'),
   path('journals/<int:journal_id>/unassoc_post/<int:post_id>/', views.unassoc_post, name='unassoc_post'),
+  path('journals/<int:journal_id>/attachement/', views.add_attachment, name='add_attachment'),
   path('posts/', views.PostList.as_view(), name='post_index'),
   path('posts/create/', views.PostCreate.as_view(), name='post_create'),
   path('posts/<int:pk>/', views.PostDetail.as_view(), name='post_detail'),

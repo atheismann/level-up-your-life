@@ -2,9 +2,6 @@
 {% block content %}
 
 <h1>Journals Details</h1>
-
-    <!-- <li>Hi, {{ user.get_short_name }}</li>
-    <li><a href="{% url 'Journal_create' %}">Journals</a></li> -->
     
     <div class="row">
         <div class="col s12 l6">
@@ -14,37 +11,31 @@
                     <span class="card-title">{{ journal.name }}</span>
                     <p>Hi, {{ user.get_short_name }}</p>
                     <p>Description: {{ journal.description }}</p>
-                    <p>Goals: {{ goals.description }}</p>
-                    <p>Achievement: {{ achievement.description }}</p>
                 </div>
-            <div class="card-action">
-              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
-                  <i class="material-icons right">edit</i>
-              </a>
-              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
-                  <i class="material-icons right">remove_circle_outline</i>
-              </a>
-              <!-- two different ways -->
               <div class="card-action">
-                 <a href="{% url 'journal_update' journal.id %}">Edit</a>
-                 <a href="{% url 'journal_delete' journal.id %}">Delete</a>
-                </div>
+                <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+                </a>
+                <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
     </div>
         <div>
 <!-- Insert photo markup below this comment -->
-          {% for attachments in attachments_set.all %}
+          {% for attachment in attachment_set.all %}
             <img class="responsive-img card-panel" src="{{attachments.url}}">
           {% empty %}
-            <div class="card-panel teal-text center-align">No attachmentss Uploaded</div>
+            <div class="card-panel teal-text center-align">No Attachments Uploaded</div>
           {% endfor %}
-             <form action="{% url 'add_attachments' cat.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+             <form action="{% url 'add_attachment' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
             {% csrf_token %}
             <input type="file" name="attachments">
             <br><br>
-            <input type="submit" class="btn" value="Upload attachments">
+            <input type="submit" class="btn" value="Upload">
           </form>
         </div>
 <!-- back to the journals -->
@@ -56,8 +47,6 @@
                     <span class="card-title">{{ journal.name }}</span>
                     <p>Hi, {{ user.get_short_name }}</p>
                     <p>Description: {{ journal.description }}</p>
-                    <p>Goals: {{ goals.description }}</p>
-                    <p>Achievement: {{ achievement.description }}</p>
                 </div>
             <div class="card-action">
               <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">

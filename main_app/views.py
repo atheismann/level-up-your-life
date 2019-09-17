@@ -62,15 +62,15 @@ def add_attachment(request, post_id):
           photo.save()
       except:
           print('An error occurred uploading file to S3')
-  return redirect('detail', post_id=post_id)
+  return redirect('post_detail', post_id=post_id)
 
 def assoc_post(request, journal_id, post_id):
   Journal.objects.get(id=journal_id).posts.add(post_id)
-  return redirect('detail', journal_id=journal_id)
+  return redirect('journal_detail', journal_id=journal_id)
 
 def unassoc_post(request, journal_id, post_id):
   Journal.objects.get(id=journal_id).posts.remove(post_id)
-  return redirect('detail', journal_id=journal_id)
+  return redirect('journal_detail', journal_id=journal_id)
 
 class PostList(ListView):
   model = Post
