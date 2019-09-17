@@ -62,9 +62,8 @@ class Task(models.Model):
     return f"{self.get_importance_display()} on {self.title}"
 
 class Post(models.Model):
-  name = models.CharField(max_length=250)
   date = models.DateField(default=date.today)
-  content = models.TextField(max_length=2500)
+  day = models.CharField(max_length=10)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")

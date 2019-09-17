@@ -20,13 +20,10 @@ nav .badge{
     right: 20px;
 }
 
-.grid-container {
+.row {
     display: grid;
-    grid-template-columns: 500px;
-    grid-gap: 10px;
-    height: 250px;
-    background-color: white;
-    padding: 10px;
+    grid-template-columns: repeat(7, 1fr);
+
 }
 .grid-container > div {
     background-color: blue;
@@ -34,4 +31,8 @@ nav .badge{
     color: white;
     padding: 20px 0;
     font-size: 15px;
+}
+
+h1 {
+    font-size: 20px;
 }

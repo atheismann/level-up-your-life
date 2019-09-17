@@ -114,10 +114,10 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
   model = Post
-  fields = '__all__'
+  fields = ['date', 'content']
 
   def form_valid(self, form):
-    form.instance.user = self.request.user
+    form.instance.journal = self.request.user
     return super().form_valid(form)
 
 class PostUpdate(UpdateView):
