@@ -48,7 +48,6 @@ class Task(models.Model):
     return f"{self.get_importance_display()} on {self.title}"
 
 class Post(models.Model):
-  name = models.CharField(max_length=250)
   date = models.DateField(default=date.today)
   content = models.TextField(max_length=2500)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
