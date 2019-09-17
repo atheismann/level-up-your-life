@@ -22,7 +22,7 @@ nav .badge{
 
 .grid-container {
     display: grid;
-    grid-template-columns: 500px;
+    grid-template-columns: 200px;
     grid-gap: 10px;
     height: 250px;
     background-color: white;

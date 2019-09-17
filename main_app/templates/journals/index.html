@@ -11,7 +11,7 @@
 
 <h1>Journal List</h1>
 
-{% for journal in journals_list %}
+{% for journal in journals %}
   <a href="{% url 'detail' journal.id %}">
     <div class="card">
         <div class="card-content">
