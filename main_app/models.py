@@ -9,7 +9,6 @@ PROGRESS = (
     ('C', 'Completed')
 )
 
-
 # Create your models here.
 class User(AbstractUser):
   pass
@@ -25,7 +24,7 @@ class Journal(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'journal_id': self.id})
+        return reverse('journal_detail', kwargs={'pk': self.id})
 
 class Task(models.Model):
   title = models.CharField(max_length=100)
@@ -33,11 +32,12 @@ class Task(models.Model):
   progress = models.CharField(
     max_length=1,
     choices=PROGRESS,
-    default=PROGRESS[0][0])
-  author = models.ForeignKey(User, on_delete=models.CASCADE)
+    default=PROGRESS[0][0],
+    )
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
-        return reverse('detail', kwargs={'task_id': self.id})
+    return reverse('task_detail', kwargs={'pk': self.id}) 
 
 class Post(models.Model):
   name = models.CharField(max_length=250)
