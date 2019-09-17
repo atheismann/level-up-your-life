@@ -2,16 +2,6 @@
 {% block content %}
 
 <h1>Post List</h1>
-<form action="{% url 'journal_create' %}" method="post">
-    {% csrf_token %}
-    {{ journal_form.as_p }}
-    <input type="submit" class="btn" value="Add Journal">
-</form> 
-<form action="{% url 'journal_create' %}" method="post">
-    {% csrf_token %}
-    {{ journal_form.as_p }}
-    <input type="submit" class="btn" value="Add Journal">
-</form> 
 
   <div>
     {% for attachment in attachment_set.all %}
