@@ -34,7 +34,7 @@ class Task(models.Model):
     max_length=1,
     choices=PROGRESS,
     default=PROGRESS[0][0])
-  author = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
         return reverse('detail', kwargs={'task_id': self.id})
