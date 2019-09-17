@@ -49,7 +49,7 @@ class Task(models.Model):
 
 class Post(models.Model):
   date = models.DateField(default=date.today)
-  content = models.TextField(max_length=2500)
+  day = models.CharField(max_length=10)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
