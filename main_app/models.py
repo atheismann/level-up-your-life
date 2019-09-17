@@ -22,7 +22,7 @@ class Journal(models.Model):
   about = models.TextField(max_length=2500)
 
   def __str__(self):
-    return self.name
+    return self.title
 
   def get_absolute_url(self):
     return reverse('journal_detail', kwargs={'pk': self.id}) 
@@ -54,6 +54,9 @@ class Post(models.Model):
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
   inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
+
+  def get_absolute_url(self):
+    return reverse('post_detail', kwargs={'pk': self.id}) 
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)

@@ -70,11 +70,7 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
   model = Post
-  fields = ['date', 'content']
-
-  def form_valid(self, form):
-    form.instance.journal = self.request.user
-    return super().form_valid(form)
+  fields = ['date', 'day', 'journal']
 
 class PostUpdate(UpdateView):
   model = Post
