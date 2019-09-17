@@ -79,7 +79,7 @@ class Task(models.Model):
 
 class Post(models.Model):
   date = models.DateField(default=date.today)
-  mealplan = models.ForeignKey(MealPlan, on_delete=models.CASCADE)
+  mealplan = models.ManyToManyField(MealPlan)
   day = models.CharField(
     max_length=1,
     choices=DAYS,
