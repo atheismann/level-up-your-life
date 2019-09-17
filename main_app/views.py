@@ -31,7 +31,7 @@ class JournalCreate(CreateView):
 
 class JournalUpdate(UpdateView):
   model = Journal
-  fields = ['title', 'author', 'about']
+  fields = ['title', 'about']
 
 class JournalDelete(DeleteView):
   model = Journal
