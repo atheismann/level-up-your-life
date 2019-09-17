@@ -1,25 +1,283 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-
 <h1>Journals Details</h1>
 
-    <li>Hi, {{ user.get_short_name }}</li>
-
-    <li><a href="{% url 'Journal_create' %}">Journals</a></li>
-
-    <div class="grid-container">
-        <div class="days1">Monday</div>
-        <div class="days2">Tuesday</div>
-        <div class="days3">Wednesday</div>  
-        <div class="days4">Thursday</div>
-        <div class="days5">Friday</div>
-        <div class="days6">Saturday</div>
-        <div class="days7">Sunday</div>
-    </div>
+    <!-- <li>Hi, {{ user.get_short_name }}</li>
+    <li><a href="{% url 'Journal_create' %}">Journals</a></li> -->
     
-
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Monday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+              <!-- two different ways -->
+              <div class="card-action">
+                 <a href="{% url 'journal_update' journal.id %}">Edit</a>
+                 <a href="{% url 'journal_delete' journal.id %}">Delete</a>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+        <div>
+<!-- Insert photo markup below this comment -->
+          {% for photo_file in photo_file_set.all %}
+            <img class="responsive-img card-panel" src="{{photo_file.url}}">
+          {% empty %}
+            <div class="card-panel teal-text center-align">No photo_files Uploaded</div>
+          {% endfor %}
+             <form action="{% url 'add_photo_file' cat.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+            {% csrf_token %}
+            <input type="file" name="photo_file">
+            <br><br>
+            <input type="submit" class="btn" value="Upload photo_file">
+          </form>
+        </div>
+<!-- back to the journals -->
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Tuesday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Wednesday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Thursday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Tuesday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Wednesday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Thursday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>       
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Friday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Saturday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+          <h2 class="indigo-text text-darken-4">Sunday</h2>  
+          <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ journal.name }}</span>
+                    <p>Hi, {{ user.get_short_name }}</p>
+                    <p>Description: {{ journal.description }}</p>
+                    <p>Goals: {{ goals.description }}</p>
+                    <p>Achievement: {{ achievement.description }}</p>
+                </div>
+            <div class="card-action">
+              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+              </a>
+              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>           
+<hr>
+<!-- task -->
+    <div class="row">
+        <div class="col s12 l3 col-offset-3">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">{{ task.name }}</span>
+              <p>Title: {{ task.title }}</p>
+              <p>Description: {{ task.description }}</p>
+              <p>progress: {{ task.progress }}</p>
+            </div>
+          </div>
+        </div>
+    </div>
+<hr>
+<!-- post --> col s12 l3 col-offset-3
+    <div class="row">
+        <div class="col s12 l3 col-offset-3">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">{{ post.name }}</span>
+              <p>Date: {{ date.description }}</p>
+              <p>Description: {{ post.description }}</p>
+              <p>Task: {{ task.description }}</p>        
+            </div>
+            <div class="card-action">
+            </div>
+          </div>
+        </div>
+      </div>
+             
+          
 <!-- this is where you are going to render the rest of the page -->
 
 <!-- JS to create a date picker and init the meal dropdown -->
