@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
-from .models import Journal, Post, Task, Attachment
+from .models import Journal, Post, Task, Attachment, Workout, MealPlan
 from .forms import SignupForm
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
@@ -15,6 +15,50 @@ BUCKET = 'levelupyourlife-aplha'
 # Define the home view
 def home(request):
   return render(request, 'home.html')
+
+class MealPlanList(ListView):
+  model = MealPlan
+
+class MealPlanDetail(DetailView):
+  model = MealPlan
+
+class MealPlanCreate(CreateView):
+  model = MealPlan
+  fields = '__all__'
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
+class MealPlanUpdate(UpdateView):
+  model = MealPlan
+  fields = ['breakfast', 'lunch', 'dinner']
+
+class MealPlanDelete(DeleteView):
+  model = MealPlan
+  success_url = '/posts/post_id/'
+
+class WorkoutList(ListView):
+  model = Workout
+
+class WorkoutDetail(DetailView):
+  model = Workout
+
+class WorkoutCreate(CreateView):
+  model = Workout
+  fields = '__all__'
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
+class WorkoutUpdate(UpdateView):
+  model = Workout
+  fields = ['workoutType']
+
+class WorkoutDelete(DeleteView):
+  model = Workout
+  success_url = '/posts/post_id/'
 
 class JournalList(ListView):
   model = Journal

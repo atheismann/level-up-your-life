@@ -10,6 +10,20 @@ IMPORTANCE = (
     ('5', 'High Importance')
 )
 
+class Workout(models.Model):
+  workoutType = models.CharField(max_length=250)
+
+  def get_absolute_url(self):
+    return reverse('workout_detail', kwargs={'pk': self.id})
+
+class MealPlan(models.Model):
+  breakfast = models.CharField(max_length=50)
+  lunch = models.CharField(max_length=50)
+  dinner = models.CharField(max_length=50)
+
+  def get_absolute_url(self):
+    return reverse('mealplan_detail', kwargs={'pk': self.id})
+
 
 class User(AbstractUser):
   pass
@@ -35,7 +49,7 @@ class Task(models.Model):
     choices=IMPORTANCE,
     default=IMPORTANCE[0][1],
   )
-  
+
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
