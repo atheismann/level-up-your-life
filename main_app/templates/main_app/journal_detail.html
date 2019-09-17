@@ -11,26 +11,34 @@
                     <span class="card-title">{{ journal.name }}</span>
                     <p>Hi, {{ user.get_short_name }}</p>
                     <p>Description: {{ journal.description }}</p>
-                    <p>Goals: {{ goals.description }}</p>
-                    <p>Achievement: {{ achievement.description }}</p>
                 </div>
-            <div class="card-action">
-              <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
-                  <i class="material-icons right">edit</i>
-              </a>
-              <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
-                  <i class="material-icons right">remove_circle_outline</i>
-              </a>
-              
               <div class="card-action">
-                 <a href="{% url 'journal_update' journal.id %}">Edit</a>
-                 <a href="{% url 'journal_delete' journal.id %}">Delete</a>
-                </div>
+                <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
+                  <i class="material-icons right">edit</i>
+                </a>
+                <a href="{% url 'journal_delete' journal.id %}" class="btn-floating red">
+                  <i class="material-icons right">remove_circle_outline</i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
     </div>
-
+        <div>
+<!-- Insert photo markup below this comment -->
+          {% for attachment in attachment_set.all %}
+            <img class="responsive-img card-panel" src="{{attachments.url}}">
+          {% empty %}
+            <div class="card-panel teal-text center-align">No Attachments Uploaded</div>
+          {% endfor %}
+             <form action="{% url 'add_attachment' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+            {% csrf_token %}
+            <input type="file" name="attachments">
+            <br><br>
+            <input type="submit" class="btn" value="Upload">
+          </form>
+        </div>
+<!-- back to the journals -->
     <div class="row">
         <div class="col s12 l4">
           <h2 class="indigo-text text-darken-4">Tuesday</h2>  
@@ -39,8 +47,6 @@
                     <span class="card-title">{{ journal.name }}</span>
                     <p>Hi, {{ user.get_short_name }}</p>
                     <p>Description: {{ journal.description }}</p>
-                    <p>Goals: {{ goals.description }}</p>
-                    <p>Achievement: {{ achievement.description }}</p>
                 </div>
             <div class="card-action">
               <a href="{% url 'journal_update' journal.id %}" class="btn-floating green">
