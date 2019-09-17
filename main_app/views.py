@@ -16,9 +16,15 @@ BUCKET = 'levelupyourlife-aplha'
 def home(request):
   return render(request, 'home.html')
 
+class JournalList(ListView):
+  model = Journal
+
+class JournalDetail(DetailView):
+  model = Journal
 class JournalCreate(CreateView):
   model = Journal
   fields = ['title', 'about']
+
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
@@ -31,15 +37,15 @@ class JournalDelete(DeleteView):
   model = Journal
   success_url = '/journals/'
 
-def journals_index(request):
-  journals = Journal.objects.all()
-  return render(request, 'journals/index.html', { 'journals': journals })
+# def journals_index(request):
+#   journals = Journal.objects.all()
+#   return render(request, 'journals/index.html', { 'journals': journals })
 
-def journals_detail(request, journal_id):
-  journal = Journal.objects.get(id=journal_id)
-  return render(request, 'journals/detail.html', {
-    'journal': journal,
-  })
+# def journals_detail(request, journal_id):
+#   journal = Journal.objects.get(id=journal_id)
+#   return render(request, 'journals/detail.html', {
+#     'journal': journal,
+#   })
 
 def about(request):
   return render(request, 'about.html')
@@ -117,7 +123,7 @@ def signup(request):
     if form.is_valid():
       user = form.save()
       login(request, user)
-      return redirect('index')
+      return redirect('journal_index')
     else:
       error_message = 'Invalid sign up - try again'
   form = SignupForm()
