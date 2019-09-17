@@ -2,67 +2,72 @@
 {% block content %}
 
 <h1>Post Details</h1>
+{% comment %} for task in post.task  {% endcomment %}
 
 <form action="{% url 'workout_create' %}" method="post">
     {% csrf_token %}
-    {{ journal_form.as_p }}
     <input type="submit" class="btn" value="Add Work out">
 </form> 
-<form action="{% url 'mealplan_create' %}" method="post">
-    {% csrf_token %}
-    {{ journal_form.as_p }}
-    <input type="submit" class="btn" value="Add Meal Plan">
-</form> 
 
-<div class="row">
-  <div class="col s12 l4">
+<div class="dt">
+  <div class="col s12 l6">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">{{ assignedtasks }}</span>
-        <p>Date {{ date.today }}</p>
-        <p>Assignedtasks {{ assignedtasks }}</p>   
-        <p>Completedtasks {{ completedtasks }}</p>
-        <p>Inprogresstasks {{ inprogresstasks }}</p>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'posts_update' post.id %}">Edit</a>
-        <a href="{% url 'posts_delete' post.id %}">Delete</a>
-      </div>
+        <span class="card-title">{{ Daily }}</span>
+        <p>Date {{ post.date }}</p>
     </div>
   </div>
 </div>
+<div class="ml">
+  <div class="col s12 l6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ Meal Plan }}</span>
+  <div>
+    {% if post.mealplan %}
+    {% for mealplan in post.mealplan.all %}
+      {{ mealplan.name }}
+      {{mealplan.breakfast}}
+      {{mealplan.lunch}}
+      {{mealplan.dinner}}
+    {% else %}
+      <form action="{% url 'mealplan_create' %}" method="post">
+    {% csrf_token %}
+      <input type="submit" class="btn" value="Create New Meal Plan">
+    </form> 
+      </div>
+    {% endif %}
+  </div>
 
 <div class="row">
-  <div class="col s12 l4">
+  <div class="col s12 l6">
     <div class="card">
       <div class="card-content">
         <span class="card-title">{{ workout }}</span>
         <p>Date {{ date.today }}</p>
-        <p>Assignedtasks {{ assignedtasks }}</p>   
-        <p>Completedtasks {{ completedtasks }}</p>
-        <p>Inprogresstasks {{ inprogresstasks }}</p>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'posts_update' post.id %}">Edit</a>
-        <a href="{% url 'posts_delete' post.id %}">Delete</a>
+        <p>Workout {{ workoutType }}</p>   
       </div>
     </div>
   </div>
 </div>
 
+{% comment %} two columns task,  {% endcomment %}
+ {% comment %} button inprogress {% endcomment %}
+
 <div class="row">
-  <div class="col s12 l4">
+  <div class="col s12 l6">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">{{ mealplan }}</span>
-        <p>Date {{ date.today }}</p>
-        <p>Assignedtasks {{ assignedtasks }}</p>   
-        <p>Completedtasks {{ completedtasks }}</p>
-        <p>inprogresstasks  {{ inprogresstasks }}</p>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'posts_update' post.id %}">Edit</a>
-        <a href="{% url 'posts_delete' post.id %}">Delete</a>
+        <span class="card-title">{{ assignedtasks }}</span>
+          {% if post.task %}
+            {% for task in post.task.all %}
+              {{ task.title }}
+              {{ task.description }}<
+              {{ task.get_importance_display }}
+          {% else post.workout %}
+            {% for workout in post.workout.all %}
+              {{ workout.workoutType}}
+          {% endif %}
       </div>
     </div>
   </div>
@@ -72,36 +77,20 @@
   <div class="col s12 l6">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">{{ post.name }}</span>
-        <p>Date {{ date.today }}</p>
-        <p>Content {{ post.content }}</p>
-        {% comment %} thre columns task, mealplan,  {% endcomment %}
-        {% comment %} button inprogress {% endcomment %}
-        <p>assignedtasks {{ assignedtasks }}</p>   
-        <p>completedtasks {{ completedtasks }}</p>
-        <p>assignedtasks {{ inprogresstasks }}</p>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'posts_update' post.id %}">Edit</a>
-        <a href="{% url 'posts_delete' post.id %}">Delete</a>
+        <span class="card-title">{{ completedtasks }}</span>
+          {% if post.task %}
+            {% for task in post.task.all %}
+              {{ task.title }}
+              {{ task.description }}<
+              {{ task.get_importance_display }}
+          {% else post.workout %}
+            {% for workout in post.workout.all %}
+              {{ workout.workoutType}}
+          {% endif %}
       </div>
     </div>
   </div>
 </div>
-
-    <div>
-      {% for attachment in attachment_set.all %}
-        <img class="responsive-img card-panel" src="{{attachment.url}}">
-      {% empty %}
-        <div class="card-panel teal-text center-align">No attachmentss Uploaded</div>
-      {% endfor %}
-         <form action="{% url 'add_attachment' post.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-        {% csrf_token %}
-        <input type="file" name="attachment">
-        <br><br>
-        <input type="submit" class="btn" value="Upload attachment">
-      </form>
-    </div>
 
 
 
