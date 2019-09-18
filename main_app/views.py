@@ -126,7 +126,7 @@ class EntryDelete(DeleteView):
 
 class TaskCreate(CreateView):
   model = Task
-  fields = ['title', 'description', 'importance', 'progress']
+  fields = ['title', 'description', 'importance']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
