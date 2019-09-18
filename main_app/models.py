@@ -20,6 +20,11 @@ DAYS = (
     ('7', 'Sunday'),
 )
 
+class User(AbstractUser):
+  pass
+  score = models.IntegerField(default=0)
+  level = models.CharField(max_length=100, default='Newbie')
+
 class Workout(models.Model):
   workout = models.CharField(max_length=250)
   description = models.TextField(max_length=2500)
@@ -28,6 +33,7 @@ class Workout(models.Model):
     choices=IMPORTANCE,
     default=IMPORTANCE[1][0],
   )
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
     return reverse('workout_detail', kwargs={'pk': self.id})
@@ -37,15 +43,10 @@ class MealPlan(models.Model):
   breakfast = models.CharField(max_length=50)
   lunch = models.CharField(max_length=50)
   dinner = models.CharField(max_length=50)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
     return reverse('mealplan_detail', kwargs={'pk': self.id})
-  
-
-class User(AbstractUser):
-  pass
-  score = models.IntegerField(default=0)
-  level = models.CharField(max_length=100, default='Newbie')
 
 class Planner(models.Model):
   title = models.CharField(max_length=250)
@@ -66,7 +67,6 @@ class Task(models.Model):
     choices=IMPORTANCE,
     default=IMPORTANCE[1][0],
   )
-
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
   def get_absolute_url(self):
@@ -86,8 +86,8 @@ class Entry(models.Model):
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
   assignedworkouts = models.ManyToManyField(Workout, related_name="assignedWorkout")
   completedworkouts = models.ManyToManyField(Workout, related_name="completedWorkout")
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
   
-
   def get_absolute_url(self):
     return reverse('entry_detail', kwargs={'pk': self.id}) 
 
