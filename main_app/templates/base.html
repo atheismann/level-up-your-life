@@ -25,11 +25,15 @@
             </ul>
             <!-- nav bar links --> 
             <ul class="right hide-on-med-and-down">
+              {% if user.is_authenticated %} 
+                <li><a href="#">Hi, {{ user.get_short_name }}</a>
+              {% endif %}
               <li><a href="{% url 'about' %}">About</a></li>
               {% if user.is_authenticated %}   
-                <li><a href="{% url 'task_index' %}">Tasks</a></li>
-                <li><a href="{% url 'entry_index' %}">Entries</a></li>
                 <li><a href="{% url 'planner_index' %}">Planners</a></li> 
+                <li><a href="{% url 'entry_index' %}">Entries</a></li>
+                <li><a href="{% url 'workout_index' %}">Workouts</a></li>
+                <li><a href="{% url 'task_index' %}">Tasks</a></li>
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
               {% else %}
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -41,11 +45,15 @@
       </nav>
     </div>
       <ul class="sidenav" id="mobile-links">
+        {% if user.is_authenticated %} 
+          <li><a href="#">Hi, {{ user.get_short_name }}</a>
+        {% endif %}
         <li><a href="{% url 'about' %}">About</a></li>
         {% if user.is_authenticated %}   
-          <li><a href="{% url 'task_index' %}">Tasks</a></li>
-          <li><a href="{% url 'entry_index' %}">Entries</a></li>
           <li><a href="{% url 'planner_index' %}">Planners</a></li> 
+          <li><a href="{% url 'entry_index' %}">Entries</a></li>
+          <li><a href="{% url 'workout_index' %}">Workouts</a></li>
+          <li><a href="{% url 'task_index' %}">Tasks</a></li>
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         {% else %}
           <li><a href="{% url 'signup' %}">Sign Up</a></li>
