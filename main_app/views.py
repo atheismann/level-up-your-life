@@ -27,7 +27,7 @@ class MealPlanDetail(DetailView):
 
 class MealPlanCreate(CreateView):
   model = MealPlan
-  fields = '__all__'
+  fields = ['name', 'breakfast', 'lunch', 'dinner']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
@@ -52,7 +52,7 @@ class WorkoutDetail(DetailView):
 
 class WorkoutCreate(CreateView):
   model = Workout
-  fields = '__all__'
+  fields = ['workout', 'description']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
@@ -60,7 +60,7 @@ class WorkoutCreate(CreateView):
 
 class WorkoutUpdate(UpdateView):
   model = Workout
-  fields = ['workoutType']
+  fields = ['workout', 'description']
 
 class WorkoutDelete(DeleteView):
   model = Workout
