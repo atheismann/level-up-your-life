@@ -178,29 +178,29 @@ def unassoc_completedtasks(request, entry_id, task_id):
 
 ###################################################################
 def assoc_assignedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.add(workout_id)
+  Entry.objects.get(id=entry_id).assignedworkouts.add(workout_id)
   return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_assignedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.remove(workout_id)
+  Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
   return redirect('entry_detail', entry_id=entry_id)
   
 def assoc_completedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.add(workout_id)
+  Entry.objects.get(id=entry_id).completedworkouts.add(workout_id)
   return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_completedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.remove(workout_id)
+  Entry.objects.get(id=entry_id).completedworkouts.remove(workout_id)
   return redirect('entry_detail', entry_id=entry_id)
 
 ###################################################################
 
 def assoc_mealplan(request, entry_id, mealplan_id):
-  MealPlan.objects.get(id=entry_id).workouts.add(mealplan_id)
+  MealPlan.objects.get(id=entry_id).mealplan.add(mealplan_id)
   return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_mealplan(request, entry_id, mealplan_id):
-  MealPlan.objects.get(id=entry_id).workouts.remove(mealplan_id)
+  MealPlan.objects.get(id=entry_id).mealplan.remove(mealplan_id)
   return redirect('entry_detail', entry_id=entry_id)
   
 
