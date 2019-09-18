@@ -35,7 +35,7 @@ urlpatterns = [
   path('workouts/<int:pk>/update/', views.WorkoutUpdate.as_view(), name='workout_update'),
   path('workouts/<int:pk>/delete/', views.WorkoutDelete.as_view(), name='workout_delete'),
   
-  #mealplan paths
+  # mealplan paths
   path('mealplan/', views.MealPlanList.as_view(), name='mealplan_index'),
   path('mealplan/create/', views.MealPlanCreate.as_view(), name='mealplan_create'),
   path('mealplan/<int:pk>/', views.MealPlanDetail.as_view(), name='mealplan_detail'),
@@ -43,7 +43,7 @@ urlpatterns = [
   path('mealplan/<int:pk>/delete/', views.MealPlanDelete.as_view(), name='mealplan_delete'),
   path('accounts/signup', views.signup, name='signup'),
 
-  #entry assoc and unassoc
+  # entry assoc and unassoc
   path('entries/<int:entry_id>/assoc_mealplan/', views.assoc_mealplan, name='assoc_mealplan'),
   path('entries/<int:entry_id>/unassoc_mealplan/<int:mealplan_id>/', views.unassoc_mealplan, name='unassoc_mealplan'),
   path('entries/<int:entry_id>/assoc_assignedworkouts/', views.assoc_assignedworkouts, name='assoc_assignedworkouts'),
