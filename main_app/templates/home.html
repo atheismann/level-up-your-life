@@ -7,15 +7,4 @@
 <br>
 <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore tempore temporibus ullam, quia maiores ea libero odio enim. Debitis reprehenderit est repellendus sunt vero fuga harum consequatur iusto, magnam error.</p>
 
-<div class="card red">
-    <div class="card-content">
-        <h4>Are you sure you want to delete planner</h4>    
-            <form action="" method="POST">
-              {% csrf_token %}
-              <input type="submit" value="Yes - Delete!" class="btn">
-              <a href="{% url 'planner_detail' planner.id %}">Cancel</a>
-            </form>
-    </div>
-</div>
-
 {% endblock %}

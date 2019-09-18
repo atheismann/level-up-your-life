@@ -16,6 +16,10 @@ BUCKET = 'levelupyourlife-aplha'
 def home(request):
   return render(request, 'home.html')
 
+def user_settings(request):
+  planners = Planner.objects.filter(user=request.user)
+  return render(request, 'user.html', { 'planners': planners })
+
 class MealPlanList(ListView):
   model = MealPlan
 

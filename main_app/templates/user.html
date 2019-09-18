@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% comment %} user account page {% endcomment %}
+<h1>My Account<h1>
+
+<div class="row1">
+  <div class="col">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">User Information</span>
+        <table>
+          <tbody>
+            <tr>
+              <td>Username:</td> 
+              <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+              <td>First Name:</td>
+              <td>{{ user.first_name }}</td>
+            </tr>
+            <tr>
+              <td>Last Name:</td>
+              <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card red accent-4">
+    <div class="card-content">
+        <h4>Danger - THIS WILL DESTROY YOUR PLANNER</h4>
+        {% for planner in planners%}
+          <p>{{ planner.title }}</p>
+          <br /><br />
+          <a class="btn" href="{% url 'planner_delete' planner.id %}">Delete Planner</a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

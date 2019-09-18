@@ -2,9 +2,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-  #planner paths
   path('', views.home, name='home'),
   path('about/', views.about, name='about'),
+  path('user/', views.user_settings, name="user"),
+
+  #planner paths
   path('planners/', views.PlannerList.as_view(), name='planner_index'),
   path('planners/create/', views.PlannerCreate.as_view(), name='planner_create'),
   path('planners/<int:pk>/', views.PlannerDetail.as_view(), name='planner_detail'),
