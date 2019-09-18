@@ -9,7 +9,7 @@
     {% empty %}
       <div class="card-panel teal-text center-align">No attachments Uploaded</div>
     {% endfor %}
-       <form action="{% url 'add_attachment' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+       <form action="{% url 'add_attachment' planner.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
       <input type="file" name="attachment">
       <br><br>

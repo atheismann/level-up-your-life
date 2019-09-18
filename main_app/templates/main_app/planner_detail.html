@@ -3,7 +3,7 @@
 
 <h1>Weekly Planner</h1> 
 <div class="row">
-  {% for post in journal.post_set.all %}
+  {% for post in planner.post_set.all %}
     {% if post.get_week_number == post.current_week %}
       <div class="col s12">
         <div class="card">

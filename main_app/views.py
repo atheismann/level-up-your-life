@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
-from .models import Journal, Post, Task, Attachment, Workout, MealPlan
+from .models import Planner, Post, Task, Attachment, Workout, MealPlan
 from .forms import SignupForm
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
@@ -60,26 +60,26 @@ class WorkoutDelete(DeleteView):
   model = Workout
   success_url = '/posts/post_id/'
 
-class JournalList(ListView):
-  model = Journal
+class PlannerList(ListView):
+  model = Planner
 
-class JournalDetail(DetailView):
-  model = Journal
-class JournalCreate(CreateView):
-  model = Journal
+class PlannerDetail(DetailView):
+  model = Planner
+class PlannerCreate(CreateView):
+  model = Planner
   fields = ['title', 'about']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
-class JournalUpdate(UpdateView):
-  model = Journal
+class PlannerUpdate(UpdateView):
+  model = Planner
   fields = ['title', 'about']
 
-class JournalDelete(DeleteView):
-  model = Journal
-  success_url = '/journals/'
+class PlannerDelete(DeleteView):
+  model = Planner
+  success_url = '/planners/'
 
 def about(request):
   return render(request, 'about.html')
@@ -98,13 +98,13 @@ def add_attachment(request, post_id):
           print('An error occurred uploading file to S3')
   return redirect('post_detail', post_id=post_id)
 
-def assoc_post(request, journal_id, post_id):
-  Journal.objects.get(id=journal_id).posts.add(post_id)
-  return redirect('journal_detail', journal_id=journal_id)
+def assoc_post(request, planner_id, post_id):
+  Planner.objects.get(id=planner_id).posts.add(post_id)
+  return redirect('planner_detail', planner_id=planner_id)
 
-def unassoc_post(request, journal_id, post_id):
-  Journal.objects.get(id=journal_id).posts.remove(post_id)
-  return redirect('journal_detail', journal_id=journal_id)
+def unassoc_post(request, planner_id, post_id):
+  Planner.objects.get(id=planner_id).posts.remove(post_id)
+  return redirect('planner_detail', planner_id=planner_id)
 
 class PostList(ListView):
   model = Post
@@ -114,7 +114,7 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
   model = Post
-  fields = ['date', 'day', 'journal']
+  fields = ['date', 'day', 'planner']
 
 class PostUpdate(UpdateView):
   model = Post
@@ -153,7 +153,7 @@ def signup(request):
     if form.is_valid():
       user = form.save()
       login(request, user)
-      return redirect('journal_index')
+      return redirect('planner_index')
     else:
       error_message = 'Invalid sign up - try again'
   form = SignupForm()

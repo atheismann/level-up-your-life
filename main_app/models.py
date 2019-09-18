@@ -46,7 +46,7 @@ class User(AbstractUser):
   score = models.IntegerField(default=0)
   level = models.CharField(max_length=100, default='Newbie')
 
-class Journal(models.Model):
+class Planner(models.Model):
   title = models.CharField(max_length=250)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   about = models.TextField(max_length=2500)
@@ -55,7 +55,7 @@ class Journal(models.Model):
     return self.title
 
   def get_absolute_url(self):
-    return reverse('journal_detail', kwargs={'pk': self.id}) 
+    return reverse('planner_detail', kwargs={'pk': self.id}) 
 
 class Task(models.Model):
   title = models.CharField(max_length=100)
@@ -80,7 +80,7 @@ class Task(models.Model):
 class Post(models.Model):
   date = models.DateField(default=date.today)
   mealplan = models.ManyToManyField(MealPlan)
-  journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
+  planner = models.ForeignKey(Planner, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
   assignedworkout = models.ManyToManyField(Workout, related_name="assignedWorkout")
