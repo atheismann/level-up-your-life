@@ -22,9 +22,9 @@
     <div class="col s6">
       <div class="card">
       {% if entry.mealplan.count %}
-        <span class="card-title">Meal Plan: {{ entry.mealplan.name }}</span>
-        <div class="card-content">
-          {% for mealplan in entry.mealplan.all %}
+        {% for mealplan in entry.mealplan.all %}
+          <span class="card-title">Meal Plan: {{ mealplan.name }}</span>
+          <div class="card-content">
             <table>
               <tbody>
                 <tr>
@@ -39,31 +39,72 @@
                   <td>Dinner:</td>
                   <td>{{ mealplan.dinner }}</td>
                 </tr>
+                <tr>
+                  <form action="{% url 'unassoc_mealplan' entry.id mealplan.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn" value="Remove Meal Plan">
+                  </form>
+                </tr>
               </tbody>
             </table>
+          </div>
           {% endfor %}
       {% else %}
-        <form action="{% url 'assoc_mealplan' entry.id %}" method="post">
-            {% csrf_token %}
-          <select name="mealplan">
-            {% for mealplan in mealplans %}
-              <option value="{{ mealplan.id }}">{{ mealplan.name}}</option>
-            {% endfor %}
-          <input type="submit" class="btn" value="Assign Meal Plan"> 
-        </form>
-        <form action="{% url 'mealplan_create' %}" method="post">
-            {% csrf_token %}
-          <input type="submit" class="btn" value="Create New Meal Plan">
-        </form> 
+        <div class="card-content">
+          <form action="{% url 'assoc_mealplan' entry.id %}" method="post">
+              {% csrf_token %}
+            <select name="mealplan">
+              {% for mealplan in mealplans %}
+                <option value="{{ mealplan.id }}">{{ mealplan.name}}</option>
+              {% endfor %}
+            <input type="submit" class="btn" value="Assign Meal Plan"> 
+          </form>
+          <form action="{% url 'mealplan_create' %}" method="post">
+              {% csrf_token %}
+            <input type="submit" class="btn" value="Create New Meal Plan">
+          </form> 
+        </div>
       {% endif %}
-    </div>
   </div>
 </div>
-{% comment %} 
+<hr>
 <div class="row">
-  <div class="col s12 l6">
-    <div class="card">
-      <div class="card-content">
+  <div class="col s12">
+    <div class="col s6">
+      <h3>Workouts</h3>
+      <div class="card">
+        <div class="card-content">
+          <form action="{% url 'assoc_workout' entry.id %}" method="post">
+              {% csrf_token %}
+            <select name="workout">
+              {% for workout in workouts %}
+                <option value="{{ workout.id }}">{{ workout.name}}</option>
+              {% endfor %}
+            <input type="submit" class="btn" value="Assign Workout"> 
+          </form>
+          <form action="{% url 'workout_create' %}" method="post">
+              {% csrf_token %}
+            <input type="submit" class="btn" value="Create New Workout">
+          </form> 
+        </div>
+      </div>
+    {% if entry.workouts.count %}
+      <div class="card">
+        <div class="card-content">
+          {% for workout in entry.workouts.all %}
+            <div class="card">
+              <span class="card-title">{{ workout.workout }}</span>
+              <div class="card-content">
+                Description:<br/>
+                {{ workout.description }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    
+{% comment %} 
         <span class="card-title">{{ workout }}</span>
         <p>Date {{ date.today }}</p>
         <p>Workout {{ workoutType }}</p>   

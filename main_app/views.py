@@ -114,6 +114,7 @@ class EntryDetail(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super(EntryDetail, self).get_context_data(**kwargs)
+    context['workouts'] = Workout.objects.all()
     context['mealplans'] = MealPlan.objects.all()
     return context
 
@@ -201,7 +202,6 @@ def unassoc_completedworkout(request, entry_id, workout_id):
 ###################################################################
 
 def assoc_mealplan(request, entry_id):
-  print(request.POST.get('mealplan'))
   mealplan_id = request.POST.get('mealplan')
   Entry.objects.get(id=entry_id).mealplan.add(mealplan_id)
   return redirect('entry_detail', pk=entry_id)
