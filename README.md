@@ -1,6 +1,8 @@
 # Level Up Your Life
 ### Dan Cermak, Andrew Theismann, Joseph Hunt
 
+The level of your life app is top of the line of modern-day planner app. once you create your first planner you will be able to schedule events daily, weekly. After you'll be able to click on the week view to see what events are on your schedule that you want to complete or check on the progress. We want you to be able to create a workout and assign it to yourself along with setting the levels of importance. You can also even schedule meal plans for breakfast lunch and dinner you can assign meal plans or create your meal plan. We want to give you the same ability for tasks.
+
 ## Trello Board
 
 ## ERD
