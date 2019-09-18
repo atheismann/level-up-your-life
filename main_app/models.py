@@ -77,7 +77,7 @@ class Task(models.Model):
   def __str__(self):
     return f"{self.get_importance_display()} on {self.title}"
 
-class Post(models.Model):
+class Entry(models.Model):
   date = models.DateField(default=date.today)
   mealplan = models.ManyToManyField(MealPlan)
   planner = models.ForeignKey(Planner, on_delete=models.CASCADE)
@@ -88,7 +88,7 @@ class Post(models.Model):
   
 
   def get_absolute_url(self):
-    return reverse('post_detail', kwargs={'pk': self.id}) 
+    return reverse('entry_detail', kwargs={'pk': self.id}) 
 
   def get_week_number(self):
     return self.date.isocalendar()[1]
@@ -102,7 +102,7 @@ class Post(models.Model):
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Attachment for post_id: {self.post_id} @{self.url}"
+        return f"Attachment for entry_id: {self.entry_id} @{self.url}"

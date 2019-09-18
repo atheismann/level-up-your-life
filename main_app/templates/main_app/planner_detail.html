@@ -3,17 +3,17 @@
 
 <h1>Weekly Planner</h1> 
 <div class="row">
-  {% for post in planner.post_set.all %}
-    {% if post.get_week_number == post.current_week %}
+  {% for entry in planner.entry_set.all %}
+    {% if entry.get_week_number == entry.current_week %}
       <div class="col s12">
         <div class="card">
           <div class="card-content">
-            <span class="card-title">{{ post.get_day_of_week }}</span>
-              <p>Date: {{ post.date }}</p>
+            <span class="card-title">{{ entry.get_day_of_week }}</span>
+              <p>Date: {{ entry.date }}</p>
               <p>Tasks:</p>
           </div>
         </div>
-        {% for task in post.assignedtasks.all %}
+        {% for task in entry.assignedtasks.all %}
           <div class="card">
             <div class="card-content">
               <span class="card-title">{{ task.title }}</span>

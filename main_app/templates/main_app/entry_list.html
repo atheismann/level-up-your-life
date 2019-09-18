@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Post List</h1>
+<h1>Entry List</h1>
 
   <div>
     {% for attachment in attachment_set.all %}
@@ -17,13 +17,13 @@
     </form>
   </div>
 
-{% for post in post_list %}
-  <a href="{% url 'post_detail' post.id %}">
+{% for entry in entry_list %}
+  <a href="{% url 'entry_detail' entry.id %}">
     <div class="card">
         <div class="card-content">
-            <span class="card-title">{{ post.name }}</span>
+            <span class="card-title">{{ entry.name }}</span>
             <p>Date: {{ date.description }}</p>
-            <p>Description: {{ post.description }}</p>
+            <p>Description: {{ entry.description }}</p>
             <p>Task: {{ task.description }}</p>
         </div>
     </div>

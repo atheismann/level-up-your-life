@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Post Details</h1>
+<h1>Entry Details</h1>
 {% comment %} for task in post.task  {% endcomment %}
 
 <form action="{% url 'workout_create' %}" method="post">
@@ -14,7 +14,7 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title">{{ Daily }}</span>
-        <p>Date {{ post.date }}</p>
+        <p>Date {{ entry.date }}</p>
     </div>
   </div>
 </div>
@@ -24,8 +24,8 @@
       <div class="card-content">
         <span class="card-title">{{ Meal Plan }}</span>
   <div>
-    {% if post.mealplan %}
-    {% for mealplan in post.mealplan.all %}
+    {% if entry.mealplan %}
+    {% for mealplan in entry.mealplan.all %}
       {{ mealplan.name }}
       {{mealplan.breakfast}}
       {{mealplan.lunch}}

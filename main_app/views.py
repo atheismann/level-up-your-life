@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
-from .models import Planner, Post, Task, Attachment, Workout, MealPlan
+from .models import Planner, Entry, Task, Attachment, Workout, MealPlan
 from .forms import SignupForm
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
@@ -36,7 +36,7 @@ class MealPlanUpdate(UpdateView):
 
 class MealPlanDelete(DeleteView):
   model = MealPlan
-  success_url = '/posts/post_id/'
+  success_url = '/entrys/entry_id/'
 
 class WorkoutList(ListView):
   model = Workout
@@ -58,7 +58,7 @@ class WorkoutUpdate(UpdateView):
 
 class WorkoutDelete(DeleteView):
   model = Workout
-  success_url = '/posts/post_id/'
+  success_url = '/entrys/entry_id/'
 
 class PlannerList(ListView):
   model = Planner
@@ -84,7 +84,7 @@ class PlannerDelete(DeleteView):
 def about(request):
   return render(request, 'about.html')
 
-def add_attachment(request, post_id):
+def add_attachment(request, entry_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
       s3 = boto3.client('s3')
@@ -92,37 +92,37 @@ def add_attachment(request, post_id):
       try:
           s3.upload_fileobj(photo_file, BUCKET, key)
           url = f"{S3_BASE_URL}{BUCKET}/{key}"
-          photo = Attachment(url=url, post_id=post_id)
+          photo = Attachment(url=url, entry_id=entry_id)
           photo.save()
       except:
           print('An error occurred uploading file to S3')
-  return redirect('post_detail', post_id=post_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
-def assoc_post(request, planner_id, post_id):
-  Planner.objects.get(id=planner_id).posts.add(post_id)
+def assoc_entry(request, planner_id, entry_id):
+  Planner.objects.get(id=planner_id).entrys.add(entry_id)
   return redirect('planner_detail', planner_id=planner_id)
 
-def unassoc_post(request, planner_id, post_id):
-  Planner.objects.get(id=planner_id).posts.remove(post_id)
+def unassoc_entry(request, planner_id, entry_id):
+  Planner.objects.get(id=planner_id).entrys.remove(entry_id)
   return redirect('planner_detail', planner_id=planner_id)
 
-class PostList(ListView):
-  model = Post
+class EntryList(ListView):
+  model = Entry
 
-class PostDetail(DetailView):
-  model = Post
+class EntryDetail(DetailView):
+  model = Entry
 
-class PostCreate(CreateView):
-  model = Post
+class EntryCreate(CreateView):
+  model = Entry
   fields = ['date', 'day', 'planner']
 
-class PostUpdate(UpdateView):
-  model = Post
+class EntryUpdate(UpdateView):
+  model = Entry
   fields = ['name', 'date', 'content', 'tasks', 'likes']
 
-class PostDelete(DeleteView):
-  model = Post
-  success_url = '/posts/'
+class EntryDelete(DeleteView):
+  model = Entry
+  success_url = '/entrys/'
 
 class TaskCreate(CreateView):
   model = Task
@@ -160,38 +160,38 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-def assoc_assignedtasks(request, post_id, task_id):
-  Post.objects.get(id=post_id).tasks.add(task_id)
-  return redirect('post_detail', post_id=post_id)
+def assoc_assignedtasks(request, entry_id, task_id):
+  Entry.objects.get(id=entry_id).tasks.add(task_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
-def unassoc_assignedtasks(request, post_id, task_id):
-  Post.objects.get(id=post_id).tasks.remove(task_id)
-  return redirect('post_detail', post_id=post_id)
+def unassoc_assignedtasks(request, entry_id, task_id):
+  Entry.objects.get(id=entry_id).tasks.remove(task_id)
+  return redirect('entry_detail', entry_id=entry_id)
   
-def assoc_completedtasks(request, post_id, task_id):
-  Post.objects.get(id=post_id).tasks.add(task_id)
-  return redirect('post_detail', post_id=post_id)
+def assoc_completedtasks(request, entry_id, task_id):
+  Entry.objects.get(id=entry_id).tasks.add(task_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
-def unassoc_completedtasks(request, post_id, task_id):
-  Post.objects.get(id=post_id).tasks.remove(task_id)
-  return redirect('post_detail', post_id=post_id)
+def unassoc_completedtasks(request, entry_id, task_id):
+  Entry.objects.get(id=entry_id).tasks.remove(task_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 ###################################################################
-def assoc_assignedworkout(request, post_id, workout_id):
-  Workout.objects.get(id=post_id).workouts.add(workout_id)
-  return redirect('post_detail', post_id=post_id)
+def assoc_assignedworkout(request, entry_id, workout_id):
+  Workout.objects.get(id=entry_id).workouts.add(workout_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
-def unassoc_assignedworkout(request, post_id, workout_id):
-  Workout.objects.get(id=post_id).workouts.remove(workout_id)
-  return redirect('post_detail', post_id=post_id)
+def unassoc_assignedworkout(request, entry_id, workout_id):
+  Workout.objects.get(id=entry_id).workouts.remove(workout_id)
+  return redirect('entry_detail', entry_id=entry_id)
   
-def assoc_completedworkout(request, post_id, workout_id):
-  Workout.objects.get(id=post_id).workouts.add(workout_id)
-  return redirect('post_detail', post_id=post_id)
+def assoc_completedworkout(request, entry_id, workout_id):
+  Workout.objects.get(id=entry_id).workouts.add(workout_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
-def unassoc_completedworkout(request, post_id, workout_id):
-  Workout.objects.get(id=post_id).workouts.remove(workout_id)
-  return redirect('post_detail', post_id=post_id)
+def unassoc_completedworkout(request, entry_id, workout_id):
+  Workout.objects.get(id=entry_id).workouts.remove(workout_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 
 
