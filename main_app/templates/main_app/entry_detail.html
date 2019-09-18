@@ -101,8 +101,8 @@
         <div class="card">
           <span class="card-title">{{ workout.workout }}</span>
           <div class="card-content">
-            Description:<br/>
-            {{ workout.description }}
+            <p>Description:<br/>
+            {{ workout.description }}</p>
           </div>
         </div>
       {% endfor %}
@@ -113,8 +113,8 @@
           <span class="card-title">{{ task.title }}</span>
           <div class="card-content">
             {{ task.get_importance_display }}
-            Description:<br/>
-            {{ task.description }}
+            <p>Description:<br/>
+            {{ task.description }}</p>
           </div>
         </div>
       {% endfor %}
