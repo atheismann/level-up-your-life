@@ -112,6 +112,10 @@ class EntryCreate(CreateView):
   model = Entry
   fields = ['date', 'planner']
 
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
 class EntryUpdate(UpdateView):
   model = Entry
   fields = ['name', 'planner']
