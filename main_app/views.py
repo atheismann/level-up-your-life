@@ -111,7 +111,7 @@ class EntryDetail(DetailView):
 class EntryCreate(CreateView):
   model = Entry
   fields = ['date', 'planner']
-
+  
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
