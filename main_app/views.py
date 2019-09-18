@@ -19,6 +19,9 @@ def home(request):
 class MealPlanList(ListView):
   model = MealPlan
 
+  def get_queryset(self):
+    return MealPlan.objects.filter(user=self.request.user)
+
 class MealPlanDetail(DetailView):
   model = MealPlan
 
@@ -40,6 +43,9 @@ class MealPlanDelete(DeleteView):
 
 class WorkoutList(ListView):
   model = Workout
+
+  def get_queryset(self):
+    return Workout.objects.filter(user=self.request.user)
 
 class WorkoutDetail(DetailView):
   model = Workout
@@ -63,6 +69,10 @@ class WorkoutDelete(DeleteView):
 class PlannerList(ListView):
   model = Planner
 
+  def get_queryset(self):
+    return Planner.objects.filter(user=self.request.user)
+
+
 class PlannerDetail(DetailView):
   model = Planner
 class PlannerCreate(CreateView):
@@ -81,33 +91,12 @@ class PlannerDelete(DeleteView):
   model = Planner
   success_url = '/planners/'
 
-def about(request):
-  return render(request, 'about.html')
-
-def add_attachment(request, entry_id):
-  photo_file = request.FILES.get('photo-file', None)
-  if photo_file:
-      s3 = boto3.client('s3')
-      key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-      try:
-          s3.upload_fileobj(photo_file, BUCKET, key)
-          url = f"{S3_BASE_URL}{BUCKET}/{key}"
-          photo = Attachment(url=url, pk=entry_id)
-          photo.save()
-      except:
-          print('An error occurred uploading file to S3')
-  return redirect('entry_detail', pk=entry_id)
-
-def assoc_entry(request, planner_id, entry_id):
-  Planner.objects.get(id=planner_id).entries.add(entry_id)
-  return redirect('planner_detail', planner_id=planner_id)
-
-def unassoc_entry(request, planner_id, entry_id):
-  Planner.objects.get(id=planner_id).entries.remove(entry_id)
-  return redirect('planner_detail', planner_id=planner_id)
 
 class EntryList(ListView):
   model = Entry
+
+  def get_queryset(self):
+    return Entry.objects.filter(user=self.request.user)
 
 class EntryDetail(DetailView):
   model = Entry
@@ -150,8 +139,36 @@ class TaskDelete(DeleteView):
 class TaskList(ListView):
   model = Task
 
+  def get_queryset(self):
+    return Task.objects.filter(user=self.request.user)
+
 class TaskDetail(DetailView):
   model = Task
+
+def about(request):
+  return render(request, 'about.html')
+
+def add_attachment(request, entry_id):
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+      s3 = boto3.client('s3')
+      key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+      try:
+          s3.upload_fileobj(photo_file, BUCKET, key)
+          url = f"{S3_BASE_URL}{BUCKET}/{key}"
+          photo = Attachment(url=url, pk=entry_id)
+          photo.save()
+      except:
+          print('An error occurred uploading file to S3')
+  return redirect('entry_detail', pk=entry_id)
+
+def assoc_entry(request, planner_id, entry_id):
+  Planner.objects.get(id=planner_id).entries.add(entry_id)
+  return redirect('planner_detail', planner_id=planner_id)
+
+def unassoc_entry(request, planner_id, entry_id):
+  Planner.objects.get(id=planner_id).entries.remove(entry_id)
+  return redirect('planner_detail', planner_id=planner_id)
 
 def signup(request):
   error_message = ''
