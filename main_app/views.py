@@ -167,7 +167,8 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-def assoc_assignedtasks(request, entry_id, task_id):
+def assoc_assignedtasks(request, entry_id):
+  task_id = request.POST.get('task')
   Entry.objects.get(id=entry_id).tasks.add(task_id)
   return redirect('entry_detail', pk=entry_id)
 
