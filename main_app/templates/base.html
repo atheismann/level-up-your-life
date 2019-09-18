@@ -28,6 +28,7 @@
               <li><a href="{% url 'about' %}">About</a></li>
               {% if user.is_authenticated %}   
                 <li><a href="{% url 'task_index' %}">Tasks</a></li>
+                <li><a href="{% url 'entry_index' %}">Entries</a></li>
                 <li><a href="{% url 'planner_index' %}">Planners</a></li> 
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
               {% else %}
@@ -43,6 +44,7 @@
         <li><a href="{% url 'about' %}">About</a></li>
         {% if user.is_authenticated %}   
           <li><a href="{% url 'task_index' %}">Tasks</a></li>
+          <li><a href="{% url 'entry_index' %}">Entries</a></li>
           <li><a href="{% url 'planner_index' %}">Planners</a></li> 
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         {% else %}

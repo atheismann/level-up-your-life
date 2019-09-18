@@ -2,26 +2,33 @@
 {% block content %}
 
 <h1>Weekly Planner</h1> 
+<form action="{% url 'entry_create' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn" value="Add Daily Entry">
+</form> 
+
 <div class="row">
   {% for entry in planner.entry_set.all %}
     {% if entry.get_week_number == entry.current_week %}
       <div class="col s12">
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">{{ entry.get_day_of_week }}</span>
-              <p>Date: {{ entry.date }}</p>
-              <p>Tasks:</p>
-          </div>
-        </div>
-        {% for task in entry.assignedtasks.all %}
+        <a href="{% url 'entry_detail' entry.id %}">
           <div class="card">
             <div class="card-content">
-              <span class="card-title">{{ task.title }}</span>
-                <p>Description: {{ task.description }}</p>
-                <p>Importance: {{ task.get_importance_display }} </p>
+              <span class="card-title">{{ entry.get_day_of_week }}</span>
+                <p>Date: {{ entry.date }}</p>
+                <p>Tasks:</p>
             </div>
           </div>
-        {% endfor %}
+          {% for task in entry.assignedtasks.all %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">{{ task.title }}</span>
+                  <p>Description: {{ task.description }}</p>
+                  <p>Importance: {{ task.get_importance_display }} </p>
+              </div>
+            </div>
+          {% endfor %}
+        </a>
       </div>
     {% endif %}
   {% endfor %}

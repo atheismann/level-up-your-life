@@ -13,11 +13,11 @@ urlpatterns = [
   path('planners/<int:planner_id>/unassoc_entry/<int:entry_id>/', views.unassoc_entry, name='unassoc_entry'),
   path('planners/<int:planner_id>/attachement/', views.add_attachment, name='add_attachment'),
 
-  path('entrys/', views.EntryList.as_view(), name='entry_index'),
-  path('entrys/create/', views.EntryCreate.as_view(), name='entry_create'),
-  path('entrys/<int:pk>/', views.EntryDetail.as_view(), name='entry_detail'),
-  path('entrys/<int:pk>/update/', views.EntryUpdate.as_view(), name='entry_update'),
-  path('entrys/<int:pk>/delete/', views.EntryDelete.as_view(), name='entry_delete'),
+  path('entries/', views.EntryList.as_view(), name='entry_index'),
+  path('entries/create/', views.EntryCreate.as_view(), name='entry_create'),
+  path('entries/<int:pk>/', views.EntryDetail.as_view(), name='entry_detail'),
+  path('entries/<int:pk>/update/', views.EntryUpdate.as_view(), name='entry_update'),
+  path('entries/<int:pk>/delete/', views.EntryDelete.as_view(), name='entry_delete'),
 
   path('tasks/', views.TaskList.as_view(), name='task_index'),
   path('tasks/create/', views.TaskCreate.as_view(), name='task_create'),

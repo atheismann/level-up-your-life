@@ -36,7 +36,7 @@ class MealPlanUpdate(UpdateView):
 
 class MealPlanDelete(DeleteView):
   model = MealPlan
-  success_url = '/entrys/entry_id/'
+  success_url = '/entries/entry_id/'
 
 class WorkoutList(ListView):
   model = Workout
@@ -58,7 +58,7 @@ class WorkoutUpdate(UpdateView):
 
 class WorkoutDelete(DeleteView):
   model = Workout
-  success_url = '/entrys/entry_id/'
+  success_url = '/entries/entry_id/'
 
 class PlannerList(ListView):
   model = Planner
@@ -99,11 +99,11 @@ def add_attachment(request, entry_id):
   return redirect('entry_detail', entry_id=entry_id)
 
 def assoc_entry(request, planner_id, entry_id):
-  Planner.objects.get(id=planner_id).entrys.add(entry_id)
+  Planner.objects.get(id=planner_id).entries.add(entry_id)
   return redirect('planner_detail', planner_id=planner_id)
 
 def unassoc_entry(request, planner_id, entry_id):
-  Planner.objects.get(id=planner_id).entrys.remove(entry_id)
+  Planner.objects.get(id=planner_id).entries.remove(entry_id)
   return redirect('planner_detail', planner_id=planner_id)
 
 class EntryList(ListView):
@@ -114,15 +114,15 @@ class EntryDetail(DetailView):
 
 class EntryCreate(CreateView):
   model = Entry
-  fields = ['date', 'day', 'planner']
+  fields = ['date', 'planner']
 
 class EntryUpdate(UpdateView):
   model = Entry
-  fields = ['name', 'date', 'content', 'tasks', 'likes']
+  fields = ['name', 'planner']
 
 class EntryDelete(DeleteView):
   model = Entry
-  success_url = '/entrys/'
+  success_url = '/entries/'
 
 class TaskCreate(CreateView):
   model = Task
