@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Post List</h1>
+<h1>Entry List</h1>
 
   <div>
     {% for attachment in attachment_set.all %}
@@ -9,7 +9,7 @@
     {% empty %}
       <div class="card-panel teal-text center-align">No attachments Uploaded</div>
     {% endfor %}
-       <form action="{% url 'add_attachment' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+       <form action="{% url 'add_attachment' planner.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
       <input type="file" name="attachment">
       <br><br>
@@ -17,13 +17,13 @@
     </form>
   </div>
 
-{% for post in post_list %}
-  <a href="{% url 'post_detail' post.id %}">
+{% for entry in entry_list %}
+  <a href="{% url 'entry_detail' entry.id %}">
     <div class="card">
         <div class="card-content">
-            <span class="card-title">{{ post.name }}</span>
+            <span class="card-title">{{ entry.name }}</span>
             <p>Date: {{ date.description }}</p>
-            <p>Description: {{ post.description }}</p>
+            <p>Description: {{ entry.description }}</p>
             <p>Task: {{ task.description }}</p>
         </div>
     </div>

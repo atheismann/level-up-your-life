@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Planners List</h1>
+
+<form action="{% url 'planner_create' %}" method="post">
+    {% csrf_token %}
+    {{ planner_form.as_p }}
+    <input type="submit" class="btn" value="Add Planner">
+</form> 
+
+{% for planner in planner_list %}
+  <a href="{% url 'planner_detail' planner.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ planner.title }}</span>
+            <p>About {{ planner.about }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

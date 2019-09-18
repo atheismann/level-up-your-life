@@ -1,44 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Post Details</h1>
-{% comment %} for task in post.task  {% endcomment %}
+<h1>Entry Details</h1>
 
 <form action="{% url 'workout_create' %}" method="post">
     {% csrf_token %}
+    {{ workout_form.as_p }}
     <input type="submit" class="btn" value="Add Work out">
 </form> 
 
-<div class="dt">
-  <div class="col s12 l6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ Daily }}</span>
-        <p>Date {{ post.date }}</p>
+<div class="row">
+  <div class="col s12">
+    <div class="col s6">
+      <div class="card">
+        <span class="card-title">{{ entry.get_day_of_week }}</span>
+        <div class="card-content">
+          <p>Date {{ entry.date }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col s6">
+      <div class="card">
+      {% comment %} {% if entry.mealplan.None %} {% endcomment %}
+        <form action="{% url 'mealplan_create' %}" method="post">
+            {% csrf_token %}
+          <input type="submit" class="btn" value="Create New Meal Plan">
+        </form> 
+      {% comment %} {% else %} {% endcomment %}
+        <span class="card-title">Meal Plan: {{ entry.mealplan.name }}</span>
+        <div class="card-content">
+          {% for mealplan in entry.mealplan.all %}
+            <table>
+              <tbody>
+                <tr>
+                  <td>Breakfast:</td>
+                  <td>{{ mealplan.breakfast }}</td>
+                </tr>
+                <tr>
+                  <td>Lunch:</td>
+                  <td>{{ mealplan.lunch }}</td>
+                </tr>
+                <tr>
+                  <td>Dinner:</td>
+                  <td>{{ mealplan.dinner }}</td>
+                </tr>
+              </tbody>
+            </table>
+          {% endfor %}
+      {% comment %} {% endif %} {% endcomment %}
     </div>
   </div>
 </div>
-<div class="ml">
-  <div class="col s12 l6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ Meal Plan }}</span>
-  <div>
-    {% if post.mealplan %}
-    {% for mealplan in post.mealplan.all %}
-      {{ mealplan.name }}
-      {{mealplan.breakfast}}
-      {{mealplan.lunch}}
-      {{mealplan.dinner}}
-    {% else %}
-      <form action="{% url 'mealplan_create' %}" method="post">
-    {% csrf_token %}
-      <input type="submit" class="btn" value="Create New Meal Plan">
-    </form> 
-      </div>
-    {% endif %}
-  </div>
-
+{% comment %} 
 <div class="row">
   <div class="col s12 l6">
     <div class="card">
@@ -54,10 +67,9 @@
 {% comment %} two columns task,  {% endcomment %}
  {% comment %} button inprogress {% endcomment %}
 
-
+{% comment %}  
   <div class="col s12">
     <span class="card-title">{{ assignedtasks }}</span>
-
         {% for tasks in tasks_list %}
           <a href="{% url 'tasks_detail' tasks.id %}">
             <div class="card">
@@ -68,8 +80,7 @@
                 </div>
             </div>
           </a>
-        {% endfor %}
-        
+        {% endfor %}  
         {% for workout in workout_list %}
           <a href="{% url 'workout_detail' workout.id %}">
             <div class="card">
@@ -83,7 +94,6 @@
         {% endfor %}
   </div>
 </div>
-
   <div class="col s12">
      <span class="card-title">{{ completedtasks }}</span>
         {% for tasks in tasks_list %}
@@ -97,7 +107,6 @@
             </div>
           </a>
         {% endfor %}
-        
         {% for workout in workout_list %}
           <a href="{% url 'workout_detail' workout.id %}">
             <div class="card">
@@ -110,6 +119,6 @@
           </a>
         {% endfor %}
   </div>
-
+  {% endcomment %}
 
 {% endblock %}
