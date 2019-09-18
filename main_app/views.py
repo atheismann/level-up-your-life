@@ -134,7 +134,7 @@ class TaskCreate(CreateView):
 
 class TaskUpdate(UpdateView):
   model = Task
-  fields = ['title', 'description', 'importance', 'progress']
+  fields = ['title', 'description', 'importance']
 
 class TaskDelete(DeleteView):
   model = Task
