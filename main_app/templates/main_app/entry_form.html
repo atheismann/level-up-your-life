@@ -15,15 +15,5 @@
       {{ form.as_table }}
     </table>
     <input type="submit" value="Submit" class="btn">
-  </form>
-
-<script>
-  var dateEl = document.getElementById('id_date');
-  M.Datepicker.init(dateEl, {
-    format: 'yyyy-mm-dd',
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    autoClose: true
-  });
-</script>  
+  </form>  
 {% endblock %}

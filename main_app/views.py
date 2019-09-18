@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
-from .models import Planner, Entry, Task, Attachment, Workout, MealPlan
+from .models import Planner, Entry, Task, Attachment, Workout, MealPlan, User
 from .forms import SignupForm
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
@@ -17,6 +17,7 @@ def home(request):
   return render(request, 'home.html')
 
 def user_settings(request):
+  User.objects.get(id=request.user.id).level_up()
   planners = Planner.objects.filter(user=request.user)
   return render(request, 'user.html', { 'planners': planners })
 
@@ -114,15 +115,18 @@ class EntryDetail(DetailView):
 
 class EntryCreate(CreateView):
   model = Entry
-  fields = ['date', 'planner']
+  fields = ['date']
   
   def form_valid(self, form):
+    planner = Planner.objects.first()
+    form.instance.planner = planner
     form.instance.user = self.request.user
+    form.instance.notes = ""
     return super().form_valid(form)
 
 class EntryUpdate(UpdateView):
   model = Entry
-  fields = ['name', 'planner']
+  fields = ['date', 'notes']
 
 class EntryDelete(DeleteView):
   model = Entry
@@ -201,8 +205,16 @@ def unassoc_assignedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).assignedtasks.remove(task_id)
   return redirect('entry_detail', pk=entry_id)
   
-def assoc_completedtasks(request, entry_id, task_id):
+def task_complete(request, entry_id, task_id):
+  Entry.objects.get(id=entry_id).assignedtasks.remove(task_id)
   Entry.objects.get(id=entry_id).completedtasks.add(task_id)
+  task = Task.objects.get(id=task_id)
+  user = User.objects.get(id=task.user.id)
+  score = int(user.score) + int(task.importance)
+  print(score)
+  user.score = score
+  user.save()
+  user.level_up()
   return redirect('entry_detail', pk=entry_id)
 
 def unassoc_completedtasks(request, entry_id, task_id):
@@ -219,7 +231,8 @@ def unassoc_assignedworkouts(request, entry_id, workout_id):
   Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
   return redirect('entry_detail', pk=entry_id)
   
-def assoc_completedworkouts(request, entry_id, workout_id):
+def workout_complete(request, entry_id, workout_id):
+  Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
   Entry.objects.get(id=entry_id).completedworkouts.add(workout_id)
   return redirect('entry_detail', pk=entry_id)
 

@@ -23,8 +23,25 @@ DAYS = (
 class User(AbstractUser):
   pass
   score = models.IntegerField(default=0)
-  level = models.CharField(max_length=100, default='Newbie')
+  level = models.CharField(max_length=100, default='Peasant')
 
+  def level_up(self):
+    if self.score <= 150:
+      self.level = 'Peasant'
+    elif self.score <= 300:
+      self.level = 'Artisan'
+    elif self.score <= 450:
+      self.level = 'Ronan'
+    elif self.score == 600:
+      self.level = 'Samurai'
+    elif self.score == 750:
+      self.level = 'Daimyo'
+    elif self.score == 1000:
+      self.level = 'Shogun'
+    else:
+      self.level = 'Emperor'
+    self.save()
+    
 class Workout(models.Model):
   workout = models.CharField(max_length=250)
   description = models.TextField(max_length=2500)
@@ -85,7 +102,8 @@ class Entry(models.Model):
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
   assignedworkouts = models.ManyToManyField(Workout, related_name="assignedWorkout")
-  completedworkouts = models.ManyToManyField(Workout, related_name="completedWorkout")
+  completedworkouts = models.ManyToManyField(Workout,   related_name="completedWorkout")
+  notes = models.TextField(max_length=2500)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   
   def get_absolute_url(self):
