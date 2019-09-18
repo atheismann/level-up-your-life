@@ -39,7 +39,7 @@ class MealPlan(models.Model):
 
   def get_absolute_url(self):
     return reverse('mealplan_detail', kwargs={'pk': self.id})
-
+  
 
 class User(AbstractUser):
   pass

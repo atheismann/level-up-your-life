@@ -43,10 +43,10 @@
             </table>
           {% endfor %}
       {% else %}
-        <form action="{% url 'assoc_mealplan' entry.id mealplan.id%}" method="post">
+        <form action="{% url 'assoc_mealplan' entry.id %}" method="post">
             {% csrf_token %}
           <select name="mealplan">
-            {% for mealplan in mealplan_list %}
+            {% for mealplan in mealplans %}
               <option value="{{ mealplan.id }}">{{ mealplan.name}}</option>
             {% endfor %}
           <input type="submit" class="btn" value="Assign Meal Plan"> 

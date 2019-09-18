@@ -18,6 +18,8 @@ urlpatterns = [
   path('entries/<int:pk>/', views.EntryDetail.as_view(), name='entry_detail'),
   path('entries/<int:pk>/update/', views.EntryUpdate.as_view(), name='entry_update'),
   path('entries/<int:pk>/delete/', views.EntryDelete.as_view(), name='entry_delete'),
+  path('entries/<int:entry_id>/assoc_mealplan/', views.assoc_mealplan, name='assoc_mealplan'),
+  path('entries/<int:entry_id>/unassoc_mealplan/<int:mealplan_id>/', views.unassoc_mealplan, name='unassoc_mealplan'),
 
   path('tasks/', views.TaskList.as_view(), name='task_index'),
   path('tasks/create/', views.TaskCreate.as_view(), name='task_create'),

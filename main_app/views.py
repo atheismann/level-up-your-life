@@ -112,6 +112,11 @@ class EntryList(ListView):
 class EntryDetail(DetailView):
   model = Entry
 
+  def get_context_data(self, **kwargs):
+    context = super(EntryDetail, self).get_context_data(**kwargs)
+    context['mealplans'] = MealPlan.objects.all()
+    return context
+
 class EntryCreate(CreateView):
   model = Entry
   fields = ['date', 'planner']
@@ -192,6 +197,19 @@ def assoc_completedworkout(request, entry_id, workout_id):
 def unassoc_completedworkout(request, entry_id, workout_id):
   Workout.objects.get(id=entry_id).workouts.remove(workout_id)
   return redirect('entry_detail', entry_id=entry_id)
+
+###################################################################
+
+def assoc_mealplan(request, entry_id):
+  print(request.POST.get('mealplan'))
+  mealplan_id = request.POST.get('mealplan')
+  Entry.objects.get(id=entry_id).mealplan.add(mealplan_id)
+  return redirect('entry_detail', pk=entry_id)
+
+def unassoc_mealplan(request, entry_id, mealplan_id):
+  Entry.objects.get(id=entry_id).mealplan.remove(mealplan_id)
+  return redirect('entry_detail', pk=entry_id)
+  
 
 
 
