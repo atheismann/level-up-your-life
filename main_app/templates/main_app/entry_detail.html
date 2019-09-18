@@ -3,12 +3,6 @@
 
 <h1>Entry Details</h1>
 
-<form action="{% url 'workout_create' %}" method="post">
-    {% csrf_token %}
-    {{ workout_form.as_p }}
-    <input type="submit" class="btn" value="Add Work out">
-</form> 
-
 <div class="row">
   <div class="col s12">
     <div class="col s6">
@@ -71,14 +65,15 @@
 <div class="row">
   <div class="col s12">
     <div class="col s6">
-      <h3>Workouts</h3>
+      <h3>To-Dos</h3>
       <div class="card">
         <div class="card-content">
-          <form action="{% url 'assoc_workout' entry.id %}" method="post">
+          <h5>Workouts:</h5>
+          <form action="{% url 'assoc_assignedworkouts' entry.id %}" method="post">
               {% csrf_token %}
             <select name="workout">
               {% for workout in workouts %}
-                <option value="{{ workout.id }}">{{ workout.name}}</option>
+                <option value="{{ workout.id }}">{{ workout.workout}}</option>
               {% endfor %}
             <input type="submit" class="btn" value="Assign Workout"> 
           </form>
@@ -86,22 +81,43 @@
               {% csrf_token %}
             <input type="submit" class="btn" value="Create New Workout">
           </form> 
+          <h5>Tasks:</h5>
+          <form action="{% url 'assoc_assignedtasks' entry.id %}" method="post">
+              {% csrf_token %}
+            <select name="task">
+              {% for task in tasks %}
+                <option value="{{ task.id }}">{{ task.title}}</option>
+              {% endfor %}
+            <input type="submit" class="btn" value="Assign Task"> 
+          </form>
+          <form action="{% url 'task_create' %}" method="post">
+              {% csrf_token %}
+            <input type="submit" class="btn" value="Create New Task">
+          </form> 
         </div>
       </div>
-    {% if entry.workouts.count %}
-      <div class="card">
-        <div class="card-content">
-          {% for workout in entry.workouts.all %}
-            <div class="card">
-              <span class="card-title">{{ workout.workout }}</span>
-              <div class="card-content">
-                Description:<br/>
-                {{ workout.description }}
-              </div>
-            </div>
-          {% endfor %}
+    {% if entry.assignedworkouts.count %}
+      {% for workout in entry.assignedworkouts.all %}
+        <div class="card">
+          <span class="card-title">{{ workout.workout }}</span>
+          <div class="card-content">
+            Description:<br/>
+            {{ workout.description }}
+          </div>
         </div>
-      </div>
+      {% endfor %}
+    {% endif %}
+    {% if entry.assignedtasks.count %}
+      {% for task in entry.assignedtasks.all %}
+        <div class="card">
+          <span class="card-title">{{ task.title }}</span>
+          <div class="card-content">
+            {{ task.get_importance_display }}
+            Description:<br/>
+            {{ task.description }}
+          </div>
+        </div>
+      {% endfor %}
     {% endif %}
     
 {% comment %} 

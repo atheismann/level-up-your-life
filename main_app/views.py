@@ -92,11 +92,11 @@ def add_attachment(request, entry_id):
       try:
           s3.upload_fileobj(photo_file, BUCKET, key)
           url = f"{S3_BASE_URL}{BUCKET}/{key}"
-          photo = Attachment(url=url, entry_id=entry_id)
+          photo = Attachment(url=url, pk=entry_id)
           photo.save()
       except:
           print('An error occurred uploading file to S3')
-  return redirect('entry_detail', entry_id=entry_id)
+  return redirect('entry_detail', pk=entry_id)
 
 def assoc_entry(request, planner_id, entry_id):
   Planner.objects.get(id=planner_id).entries.add(entry_id)
@@ -116,6 +116,7 @@ class EntryDetail(DetailView):
     context = super(EntryDetail, self).get_context_data(**kwargs)
     context['workouts'] = Workout.objects.all()
     context['mealplans'] = MealPlan.objects.all()
+    context['tasks'] = Task.objects.all()
     return context
 
 class EntryCreate(CreateView):
@@ -168,36 +169,37 @@ def signup(request):
 
 def assoc_assignedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).tasks.add(task_id)
-  return redirect('entry_detail', entry_id=entry_id)
+  return redirect('entry_detail', pk=entry_id)
 
 def unassoc_assignedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).tasks.remove(task_id)
-  return redirect('entry_detail', entry_id=entry_id)
+  return redirect('entry_detail', pk=entry_id)
   
 def assoc_completedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).tasks.add(task_id)
-  return redirect('entry_detail', entry_id=entry_id)
+  return redirect('entry_detail', pk=entry_id)
 
 def unassoc_completedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).tasks.remove(task_id)
-  return redirect('entry_detail', entry_id=entry_id)
+  return redirect('entry_detail', pk=entry_id)
 
 ###################################################################
-def assoc_assignedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.add(workout_id)
-  return redirect('entry_detail', entry_id=entry_id)
+def assoc_assignedworkouts(request, entry_id):
+  workout_id = request.POST.get('workout')
+  Entry.objects.get(id=entry_id).assignedworkouts.add(workout_id)
+  return redirect('entry_detail', pk=entry_id)
 
-def unassoc_assignedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.remove(workout_id)
-  return redirect('entry_detail', entry_id=entry_id)
+def unassoc_assignedworkouts(request, entry_id, workout_id):
+  Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
+  return redirect('entry_detail', pk=entry_id)
   
-def assoc_completedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.add(workout_id)
-  return redirect('entry_detail', entry_id=entry_id)
+def assoc_completedworkouts(request, entry_id, workout_id):
+  Entry.objects.get(id=entry_id).completedworkouts.add(workout_id)
+  return redirect('entry_detail', pk=entry_id)
 
-def unassoc_completedworkout(request, entry_id, workout_id):
-  Workout.objects.get(id=entry_id).workouts.remove(workout_id)
-  return redirect('entry_detail', entry_id=entry_id)
+def unassoc_completedworkouts(request, entry_id, workout_id):
+  Entry.objects.get(id=entry_id).completedworkouts.remove(workout_id)
+  return redirect('entry_detail', pk=entry_id)
 
 ###################################################################
 
