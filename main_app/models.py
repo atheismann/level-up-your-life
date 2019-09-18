@@ -10,13 +10,29 @@ IMPORTANCE = (
     ('5', 'High Importance')
 )
 
+DAYS = (
+    ('1', 'Monday'),
+    ('2', 'Tuesday'),
+    ('3', 'Wednesday'),
+    ('4', 'Thursday'),
+    ('5', 'Friday'),
+    ('6', 'Saturday'),
+    ('7', 'Sunday'),
+)
+
 class Workout(models.Model):
-  workoutType = models.CharField(max_length=250)
+  workout = models.CharField(max_length=250)
+  importance = models.CharField(
+    max_length=1,
+    choices=IMPORTANCE,
+    default=IMPORTANCE[1][0],
+  )
 
   def get_absolute_url(self):
     return reverse('workout_detail', kwargs={'pk': self.id})
 
 class MealPlan(models.Model):
+  name = models.CharField(max_length=50)
   breakfast = models.CharField(max_length=50)
   lunch = models.CharField(max_length=50)
   dinner = models.CharField(max_length=50)
@@ -47,7 +63,7 @@ class Task(models.Model):
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,
-    default=IMPORTANCE[0][1],
+    default=IMPORTANCE[1][0],
   )
 
   user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -63,14 +79,26 @@ class Task(models.Model):
 
 class Post(models.Model):
   date = models.DateField(default=date.today)
-  day = models.CharField(max_length=10)
+  mealplan = models.ManyToManyField(MealPlan)
   journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
-  inprogresstasks = models.ManyToManyField(Task, related_name="inProgressTasks")
+  assignedworkout = models.ManyToManyField(Workout, related_name="assignedWorkout")
+  completedworkout = models.ManyToManyField(Workout, related_name="completedWorkout")
+  
 
   def get_absolute_url(self):
     return reverse('post_detail', kwargs={'pk': self.id}) 
+
+  def get_week_number(self):
+    return self.date.isocalendar()[1]
+  
+  def get_day_of_week(self):
+    d = self.date.isocalendar()[2]
+    return DAYS[d-1][1]
+  
+  def current_week(self):
+    return date.today().isocalendar()[1]
 
 class Attachment(models.Model):
     url = models.CharField(max_length=200)
