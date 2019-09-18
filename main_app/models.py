@@ -22,6 +22,7 @@ DAYS = (
 
 class Workout(models.Model):
   workout = models.CharField(max_length=250)
+  description = models.TextField(max_length=2500)
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,
@@ -83,8 +84,8 @@ class Entry(models.Model):
   planner = models.ForeignKey(Planner, on_delete=models.CASCADE)
   assignedtasks = models.ManyToManyField(Task, related_name="assignedTasks")
   completedtasks = models.ManyToManyField(Task, related_name="completedTasks")
-  assignedworkout = models.ManyToManyField(Workout, related_name="assignedWorkout")
-  completedworkout = models.ManyToManyField(Workout, related_name="completedWorkout")
+  assignedworkouts = models.ManyToManyField(Workout, related_name="assignedWorkout")
+  completedworkouts = models.ManyToManyField(Workout, related_name="completedWorkout")
   
 
   def get_absolute_url(self):
