@@ -37,4 +37,7 @@ urlpatterns = [
   path('mealplan/<int:pk>/update/', views.MealPlanUpdate.as_view(), name='mealplan_update'),
   path('mealplan/<int:pk>/delete/', views.MealPlanDelete.as_view(), name='mealplan_delete'),
   path('accounts/signup', views.signup, name='signup'),
+
+  path('planners/<int:planner_id>/assoc_mealplan/<int:mealplan_id>/', views.assoc_mealplan, name='assoc_mealplan'),
+  path('planners/<int:planner_id>/unassoc_mealplan/<int:mealplan_id>/', views.unassoc_mealplan, name='unassoc_mealplan'),
 ]
