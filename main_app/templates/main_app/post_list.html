@@ -7,7 +7,7 @@
     {% for attachment in attachment_set.all %}
       <img class="responsive-img card-panel" src="{{attachment.url}}">
     {% empty %}
-      <div class="card-panel teal-text center-align">No attachmentss Uploaded</div>
+      <div class="card-panel teal-text center-align">No attachments Uploaded</div>
     {% endfor %}
        <form action="{% url 'add_attachment' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
