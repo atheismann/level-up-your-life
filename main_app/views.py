@@ -169,19 +169,19 @@ def signup(request):
 
 def assoc_assignedtasks(request, entry_id):
   task_id = request.POST.get('task')
-  Entry.objects.get(id=entry_id).tasks.add(task_id)
+  Entry.objects.get(id=entry_id).assignedtasks.add(task_id)
   return redirect('entry_detail', pk=entry_id)
 
 def unassoc_assignedtasks(request, entry_id, task_id):
-  Entry.objects.get(id=entry_id).tasks.remove(task_id)
+  Entry.objects.get(id=entry_id).assignedtasks.remove(task_id)
   return redirect('entry_detail', pk=entry_id)
   
 def assoc_completedtasks(request, entry_id, task_id):
-  Entry.objects.get(id=entry_id).tasks.add(task_id)
+  Entry.objects.get(id=entry_id).completedtasks.add(task_id)
   return redirect('entry_detail', pk=entry_id)
 
 def unassoc_completedtasks(request, entry_id, task_id):
-  Entry.objects.get(id=entry_id).tasks.remove(task_id)
+  Entry.objects.get(id=entry_id).completedtasks.remove(task_id)
   return redirect('entry_detail', pk=entry_id)
 
 ###################################################################
