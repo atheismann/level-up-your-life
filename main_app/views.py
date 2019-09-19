@@ -102,6 +102,17 @@ class EntryList(ListView):
   def get_queryset(self):
     return Entry.objects.filter(user=self.request.user)
 
+class EntryCreate(CreateView):
+  model = Entry
+  fields = ['date']
+  
+  def form_valid(self, form):
+    planner = Planner.objects.get(user=self.request.user.id)
+    form.instance.planner = planner
+    form.instance.user = self.request.user
+    form.instance.notes = ""
+    return super().form_valid(form)
+
 def EntryDetail(request, entry_id):
   entry = Entry.objects.get(id=entry_id)
   task_form = TaskForm()
@@ -111,17 +122,6 @@ def EntryDetail(request, entry_id):
   return render(request, 'main_app/entry_detail.html', {
     'entry': entry, 'task_form': task_form, 'workouts': workouts, 'mealplans': mealplans, 'tasks': tasks
   })
-
-class EntryCreate(CreateView):
-  model = Entry
-  fields = ['date']
-  
-  def form_valid(self, form):
-    planner = Planner.objects.first()
-    form.instance.planner = planner
-    form.instance.user = self.request.user
-    form.instance.notes = ""
-    return super().form_valid(form)
 
 class EntryUpdate(UpdateView):
   model = Entry
@@ -138,6 +138,7 @@ class TaskCreate(CreateView):
 
   def form_valid(self, form):
     form.instance.user = self.request.user
+    form.instance.recurring = True
     return super().form_valid(form)
 
 class TaskUpdate(UpdateView):
@@ -165,6 +166,7 @@ def non_task_create(request, entry_id):
   if form.is_valid():
     new_task = form.save(commit=False)
     new_task.user = request.user
+    new_task.recurring = False
     new_task.save()
     Entry.objects.get(id=entry_id).assignedtasks.add(new_task.pk)
   return redirect('entry_detail', entry_id=entry_id)

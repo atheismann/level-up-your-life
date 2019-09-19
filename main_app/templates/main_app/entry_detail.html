@@ -106,7 +106,7 @@
               {% csrf_token %}
             <select name="task">
               {% for task in tasks %}
-                {% if task in entry.assignedtasks.all or task in entry.completedtasks.all %}
+                {% if task.recurring == True and task in entry.assignedtasks.all or task in entry.completedtasks.all %}
                 {% else %}
                   <option value="{{ task.id }}">{{ task.title}}</option>
                 {% endif %}
