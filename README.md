@@ -8,7 +8,7 @@ After spending hours looking through different planner apps we were unable to fi
 The planner will give you the ability to create entries such as tasks, meal plans, and workouts. You can assign the entries to a specific day, daily or weekly. Once entries are entered into the planner you will be able to view all entries by day or week, assign importance and update progress. 
 
 ## ERD
-![ERD - LucidChart](https://www.lucidchart.com/publicSegments/view/53fa32dc-5983-4d1c-9515-e894bf32c9e2/image.jpeg)
+![ERD - LucidChart](https://i.imgur.com/jkFTwtK.jpg)
 
 ## Trello Board
 [Trello Board](https://trello.com/b/bxij6mUm/p3-level-up-your-life)
@@ -29,7 +29,7 @@ The planner will give you the ability to create entries such as tasks, meal plan
 - Heroku
 
 ## App images
-![Imgur]()
-![Imgur]()
+![Imgur](https://i.imgur.com/rCGbKbJ.jpg)
+![Imgur](https://i.imgur.com/AdeKbLE.jpg)
 ![Imgur]()
 ![Imgur]()
