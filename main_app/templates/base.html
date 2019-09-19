@@ -26,8 +26,8 @@
             <!-- nav bar links --> 
             <ul class="right hide-on-med-and-down">
               {% if user.is_authenticated %} 
-                <li><span class="badge blue-grey lighten-1 white-text">test</span><li>
-                <li><span class="badge white-text pink new">5</span></li>
+                <li><span class="badge blue-grey lighten-1 white-text">{{ user.level }}</span><li>
+                <li><span class="badge white-text pink">{{ user.score }} Points</span></li>
                 <li><a href="{% url 'user' %}">Hi, {{ user.get_short_name }}</a>
               {% endif %}
               <li><a href="{% url 'about' %}">About</a></li>
@@ -45,8 +45,8 @@
     </div>
       <ul class="sidenav" id="mobile-links">
         {% if user.is_authenticated %} 
-          <li><span class="badge white-text pink new left">5</span></li>
-          <li><span class="badge blue-grey lighten-1 white-text left">test</span><li>
+          <li><span class="badge blue-grey lighten-1 white-text left">{{ user.level }}</span><li>
+          <li><span class="badge white-text pink left">{{ user.score }} Points</span></li>
           <li><br></li>
           <li><a href="{% url 'user' %}">Hi, {{ user.get_short_name }}</a>
         {% endif %}
