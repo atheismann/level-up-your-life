@@ -79,6 +79,7 @@ class Planner(models.Model):
 class Task(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField(max_length=2500)
+  recurring = models.BooleanField(default=False)
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,
@@ -88,12 +89,6 @@ class Task(models.Model):
 
   def get_absolute_url(self):
     return reverse('task_detail', kwargs={'pk': self.id}) 
-  
-  def __str__(self):
-    return f"{self.get_progress_display()} on {self.title}"
-  
-  def __str__(self):
-    return f"{self.get_importance_display()} on {self.title}"
 
 class Entry(models.Model):
   date = models.DateField(default=date.today)

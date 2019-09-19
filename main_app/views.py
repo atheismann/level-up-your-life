@@ -108,9 +108,9 @@ class EntryDetail(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super(EntryDetail, self).get_context_data(**kwargs)
-    context['workouts'] = Workout.objects.all()
-    context['mealplans'] = MealPlan.objects.all()
-    context['tasks'] = Task.objects.all()
+    context['workouts'] = Workout.objects.filter(user=self.request.user)
+    context['mealplans'] = MealPlan.objects.filter(user=self.request.user)
+    context['tasks'] = Task.objects.filter(user=self.request.user)
     return context
 
 class EntryCreate(CreateView):
@@ -134,11 +134,15 @@ class EntryDelete(DeleteView):
 
 class TaskCreate(CreateView):
   model = Task
-  fields = ['title', 'description', 'importance']
+  fields = ['title', 'description', 'importance', 'recurring']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
+  def get_success_url(self):
+    messages.success(self.request, 'Task Created')
+    return redirect('planner_detail', planner_id=planner_id)
 
 class TaskUpdate(UpdateView):
   model = Task
@@ -234,6 +238,13 @@ def unassoc_assignedworkouts(request, entry_id, workout_id):
 def workout_complete(request, entry_id, workout_id):
   Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
   Entry.objects.get(id=entry_id).completedworkouts.add(workout_id)
+  workout = Workout.objects.get(id=workout_id)
+  user = User.objects.get(id=workout.user.id)
+  score = int(user.score) + int(workout.importance)
+  print(score)
+  user.score = score
+  user.save()
+  user.level_up()
   return redirect('entry_detail', pk=entry_id)
 
 def unassoc_completedworkouts(request, entry_id, workout_id):
