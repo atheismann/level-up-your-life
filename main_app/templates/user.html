@@ -42,15 +42,26 @@
   </div>
 </div>
 
-
+<div class="card orange accent-4">
+  <div class="card-content center">
+    <h4>Warning - This section will modify your recurring data!</h4>
+    <br/>
+    <a class="btn left" href="{% url 'task_index'%}">Edit Recurring Tasks</a>
+    <a class="btn right" href="{% url 'workout_index'%}">Edit Workouts</a>
+    <br/><br/>
+  </div>
+</div>
 
 <div class="card red accent-4">
-    <div class="card-content">
-        <h4>Danger - THIS WILL DESTROY YOUR PLANNER</h4>
+    <div class="card-content center">
+        <h4>Danger - THIS WILL DESTROY YOUR DATA</h4>
         {% for planner in planners%}
-          <p>{{ planner.title }}</p>
-          <br /><br />
-          <a class="btn" href="{% url 'planner_delete' planner.id %}">Delete Planner</a>
+        <br />
+          <div class="card">
+            <p>{{ planner.title }}</p>
+            <br />
+            <a class="btn" href="{% url 'planner_delete' planner.id %}">Delete Planner</a>
+          </div>
         {% endfor %}
     </div>
 </div>

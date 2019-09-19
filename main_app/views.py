@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 from .models import Planner, Entry, Task, Attachment, Workout, MealPlan, User
-from .forms import SignupForm
+from .forms import SignupForm, TaskForm
 
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
 BUCKET = 'levelupyourlife-aplha'
@@ -69,7 +69,6 @@ class WorkoutUpdate(UpdateView):
 
 class WorkoutDelete(DeleteView):
   model = Workout
-  success_url = '/entries/entry_id/'
 
 class PlannerList(ListView):
   model = Planner
@@ -103,15 +102,15 @@ class EntryList(ListView):
   def get_queryset(self):
     return Entry.objects.filter(user=self.request.user)
 
-class EntryDetail(DetailView):
-  model = Entry
-
-  def get_context_data(self, **kwargs):
-    context = super(EntryDetail, self).get_context_data(**kwargs)
-    context['workouts'] = Workout.objects.filter(user=self.request.user)
-    context['mealplans'] = MealPlan.objects.filter(user=self.request.user)
-    context['tasks'] = Task.objects.filter(user=self.request.user)
-    return context
+def EntryDetail(request, entry_id):
+  entry = Entry.objects.get(id=entry_id)
+  task_form = TaskForm()
+  workouts = Workout.objects.filter(user=request.user)
+  mealplans = MealPlan.objects.filter(user=request.user)
+  tasks = Task.objects.filter(user=request.user)
+  return render(request, 'main_app/entry_detail.html', {
+    'entry': entry, 'task_form': task_form, 'workouts': workouts, 'mealplans': mealplans, 'tasks': tasks
+  })
 
 class EntryCreate(CreateView):
   model = Entry
@@ -134,15 +133,12 @@ class EntryDelete(DeleteView):
 
 class TaskCreate(CreateView):
   model = Task
-  fields = ['title', 'description', 'importance', 'recurring']
+  fields = ['title', 'description', 'importance']
+  success_url = '/entries/'
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
-
-  def get_success_url(self):
-    messages.success(self.request, 'Task Created')
-    return redirect('planner_detail', planner_id=planner_id)
 
 class TaskUpdate(UpdateView):
   model = Task
@@ -164,6 +160,15 @@ class TaskDetail(DetailView):
 def about(request):
   return render(request, 'about.html')
 
+def non_task_create(request, entry_id):
+  form = TaskForm(request.POST)
+  if form.is_valid():
+    new_task = form.save(commit=False)
+    new_task.user = request.user
+    new_task.save()
+    Entry.objects.get(id=entry_id).assignedtasks.add(new_task.pk)
+  return redirect('entry_detail', entry_id=entry_id)
+
 def add_attachment(request, entry_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
@@ -176,7 +181,7 @@ def add_attachment(request, entry_id):
           photo.save()
       except:
           print('An error occurred uploading file to S3')
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 def assoc_entry(request, planner_id, entry_id):
   Planner.objects.get(id=planner_id).entries.add(entry_id)
@@ -203,11 +208,11 @@ def signup(request):
 def assoc_assignedtasks(request, entry_id):
   task_id = request.POST.get('task')
   Entry.objects.get(id=entry_id).assignedtasks.add(task_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_assignedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).assignedtasks.remove(task_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
   
 def task_complete(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).assignedtasks.remove(task_id)
@@ -219,21 +224,21 @@ def task_complete(request, entry_id, task_id):
   user.score = score
   user.save()
   user.level_up()
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_completedtasks(request, entry_id, task_id):
   Entry.objects.get(id=entry_id).completedtasks.remove(task_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 ###################################################################
 def assoc_assignedworkouts(request, entry_id):
   workout_id = request.POST.get('workout')
   Entry.objects.get(id=entry_id).assignedworkouts.add(workout_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_assignedworkouts(request, entry_id, workout_id):
   Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
   
 def workout_complete(request, entry_id, workout_id):
   Entry.objects.get(id=entry_id).assignedworkouts.remove(workout_id)
@@ -245,22 +250,22 @@ def workout_complete(request, entry_id, workout_id):
   user.score = score
   user.save()
   user.level_up()
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_completedworkouts(request, entry_id, workout_id):
   Entry.objects.get(id=entry_id).completedworkouts.remove(workout_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 ###################################################################
 
 def assoc_mealplan(request, entry_id):
   mealplan_id = request.POST.get('mealplan')
   Entry.objects.get(id=entry_id).mealplan.add(mealplan_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
 
 def unassoc_mealplan(request, entry_id, mealplan_id):
   Entry.objects.get(id=entry_id).mealplan.remove(mealplan_id)
-  return redirect('entry_detail', pk=entry_id)
+  return redirect('entry_detail', entry_id=entry_id)
   
 
 

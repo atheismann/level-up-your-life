@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from datetime import date
 
-
 IMPORTANCE = (
     ('1', 'Low Importance'),
     ('3', 'Medium Importance'),
@@ -79,7 +78,7 @@ class Planner(models.Model):
 class Task(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField(max_length=2500)
-  recurring = models.BooleanField(default=False)
+  recurring = models.BooleanField(default=True)
   importance = models.CharField(
     max_length=1,
     choices=IMPORTANCE,

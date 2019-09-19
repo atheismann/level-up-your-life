@@ -19,7 +19,8 @@ urlpatterns = [
   # entry paths
   path('entries/', views.EntryList.as_view(), name='entry_index'),
   path('entries/create/', views.EntryCreate.as_view(), name='entry_create'),
-  path('entries/<int:pk>/', views.EntryDetail.as_view(), name='entry_detail'),
+  path('entries/<int:entry_id>/', views.EntryDetail, name='entry_detail'),
+  path('entries/<int:entry_id>/create_task/', views.non_task_create, name='entry_createNonTask'),
   path('entries/<int:pk>/update/', views.EntryUpdate.as_view(), name='entry_update'),
   path('entries/<int:pk>/delete/', views.EntryDelete.as_view(), name='entry_delete'),
 
