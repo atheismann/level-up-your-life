@@ -54,18 +54,25 @@
           {% endfor %}
         {% else %}
           <div class="card-content">
-            <form action="{% url 'assoc_mealplan' entry.id %}" method="post">
-                {% csrf_token %}
-              <select name="mealplan">
-                {% for mealplan in mealplans %}
-                  <option value="{{ mealplan.id }}">{{ mealplan.name}}</option>
-                {% endfor %}
-              <input type="submit" class="btn btn-small" value="Assign Meal Plan"> 
-            </form>
-            <form action="{% url 'mealplan_create' %}" method="post">
-                {% csrf_token %}
-              <input type="submit" class="btn btn-small" value="Create New Meal Plan">
-            </form> 
+            {% if mealplans.count %}
+              <form action="{% url 'assoc_mealplan' entry.id %}" method="post">
+                  {% csrf_token %}
+                <select name="mealplan">
+                  {% for mealplan in mealplans %}
+                    <option value="{{ mealplan.id }}">{{ mealplan.name}}</option>
+                  {% endfor %}
+                <input type="submit" class="btn btn-small" value="Assign Meal Plan"> 
+              </form>
+              <form action="{% url 'mealplan_create' %}" method="post">
+                  {% csrf_token %}
+                <input type="submit" class="btn btn-small" value="Create New Meal Plan">
+              </form>
+            {% else %} 
+              <form action="{% url 'mealplan_create' %}" method="post">
+                  {% csrf_token %}
+                <input type="submit" class="btn btn-small" value="Create New Meal Plan">
+              </form>
+            {% endif %} 
           </div>
         {% endif %}
       </div>
@@ -79,22 +86,29 @@
       <div class="card z-depth-4">
         <div class="card-content">
           <h5>Workouts:</h5>
-          <form action="{% url 'assoc_assignedworkouts' entry.id %}" method="post">
-              {% csrf_token %}
-            <select name="workout">
-              {% for workout in workouts %}
-                {% if workout in entry.assignedworkouts.all or workout in entry.completedworkouts.all %}
-                {% else %}
-                  <option value="{{ workout.id }}">{{ workout.workout}}</option>
-                {% endif %}
-              {% endfor %}
-            <input type="submit" class="btn btn-small" value="Assign Workout"> 
-          </form>
-          <br>
-          <form action="{% url 'workout_create' %}" method="post">
-              {% csrf_token %}
-            <input type="submit" class="btn btn-small" value="Create New Workout">
-          </form>
+          {% if workouts.count %}
+            <form action="{% url 'assoc_assignedworkouts' entry.id %}" method="post">
+                {% csrf_token %}
+              <select name="workout">
+                <option value="#">Select/Create a Workout</option>
+                {% for workout in workouts %}
+                  {% if workout in entry.assignedworkouts.all or workout in entry.completedworkouts.all %}
+                  {% else %}
+                    <option value="{{ workout.id }}">{{ workout.workout}}</option>
+                  {% endif %}
+                {% endfor %}
+              <input type="submit" class="btn btn-small" value="Assign Workout"> 
+            </form>
+            <form action="{% url 'workout_create' %}" method="post">
+                {% csrf_token %}
+              <input type="submit" class="btn btn-small" value="Create New Workout">
+            </form>
+          {% else %}
+            <form action="{% url 'workout_create' %}" method="post">
+                {% csrf_token %}
+              <input type="submit" class="btn btn-small" value="Create New Workout">
+            </form>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -102,22 +116,30 @@
       <div class="card z-depth-4">
         <div class="card-content"> 
           <h5>Recurring Tasks:</h5>
-          <form action="{% url 'assoc_assignedtasks' entry.id %}" method="post">
-              {% csrf_token %}
-            <select name="task">
-              {% for task in tasks %}
-                {% if task.recurring == True and task in entry.assignedtasks.all or task in entry.completedtasks.all %}
-                {% else %}
-                  <option value="{{ task.id }}">{{ task.title}}</option>
-                {% endif %}
-              {% endfor %}
-            <input type="submit" class="btn btn-small" value="Assign Recurring Task"> 
-          </form>
-          <br>
-          <form action="{% url 'task_create' %}" method="post">
-              {% csrf_token %}
-            <input type="submit" class="btn btn-small" value="Create New Recurring Task">
-          </form> 
+          {% if workouts.count %}
+            <form action="{% url 'assoc_assignedtasks' entry.id %}" method="post">
+                {% csrf_token %}
+              <select name="task">
+                <option value="#">Select/Create a Recurring Task</option>
+                {% for task in tasks %}
+                  {% if task.recurring == True and task in entry.assignedtasks.all or task in entry.completedtasks.all %}
+                  {% else %}
+                    <option value="{{ task.id }}">{{ task.title}}</option>
+                  {% endif %}
+                {% endfor %}
+              <input type="submit" class="btn btn-small" value="Assign Recurring Task"> 
+            </form>
+            <br>
+            <form action="{% url 'task_create' %}" method="post">
+                {% csrf_token %}
+              <input type="submit" class="btn btn-small" value="Create New Recurring Task">
+            </form>
+          {% else %} 
+            <form action="{% url 'task_create' %}" method="post">
+                {% csrf_token %}
+              <input type="submit" class="btn btn-small" value="Create New Recurring Task">
+            </form>
+          {% endif %} 
         </div>
       </div>
     </div>
