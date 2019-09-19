@@ -2,20 +2,74 @@ body {
     display: flex;
     min-height: 125vh;
     flex-direction: column;
-  }
+}
   
-  main {
+main {
     flex: 1 0 auto;
-  }
+}
   
-  footer.page-footer {
+footer.page-footer {
     padding-top: 3px;
     text-align: right;
     height: 35px;
-  }
+}
   
-  nav .badge{
+nav .badge{
     position: relative;
     top: 20px;
     right: 20px;
-  }
+}
+
+h1 {
+    font-size: 20px;
+}
+
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+	/* flip the pane when hovered */
+	.flip-container:hover .flipper, .flip-container.hover .flipper {
+		transform: rotateY(180deg);
+	}
+
+.flip-container, .front, .back {
+	width: 320px;
+	height: 480px;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}
+
+.responsive-img {
+    height: 50vw;
+}
+#image{
+    height:25vw;
+}

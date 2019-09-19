@@ -6,28 +6,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Level_up_your_life</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Level Up Your Life</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
   <body class="mbody">
-    <header class="navbar-fixed">
+    <header>
+      <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper light-blue">
           <div class="container">
             <ul>
-              <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Level up your life</a></li>
-              <a href="#" class="sidenav-trigger" data-target="mobile-links">
-                <i class="material-icons right-">menu</i>
-              </a>
+              <li><a href="/" class="brand-logo">Level Up Your Life</a></li>
+                <a href="#" class="sidenav-trigger" data-target="mobile-links" style="float: right">
+                  <i class="material-icons">menu</i>
+                </a>
             </ul>
-            <!-- hide the links -->
+            <!-- nav bar links --> 
             <ul class="right hide-on-med-and-down">
+              {% if user.is_authenticated %} 
+                <li><span class="badge blue-grey lighten-1 white-text">{{ user.level }}</span><li>
+                <li><span class="badge white-text pink">{{ user.score }} Points</span></li>
+                <li><a href="{% url 'user' %}">Hi, {{ user.get_short_name }}</a>
+              {% endif %}
               <li><a href="{% url 'about' %}">About</a></li>
               {% if user.is_authenticated %}   
-                <li><a href="{% url 'task_index' %}">Tasks</a></li>
-                <li><a href="{% url 'index' %}">Journals</a></li> 
+                <li><a href="{% url 'planner_index' %}">Planner</a></li> 
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
               {% else %}
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -37,11 +42,17 @@
           </div>
         </div>
       </nav>
+    </div>
       <ul class="sidenav" id="mobile-links">
+        {% if user.is_authenticated %} 
+          <li><span class="badge blue-grey lighten-1 white-text left">{{ user.level }}</span><li>
+          <li><span class="badge white-text pink left">{{ user.score }} Points</span></li>
+          <li><br></li>
+          <li><a href="{% url 'user' %}">Hi, {{ user.get_short_name }}</a>
+        {% endif %}
         <li><a href="{% url 'about' %}">About</a></li>
         {% if user.is_authenticated %}   
-          <li><a href="{% url 'task_index' %}">Tasks</a></li>
-          <li><a href="{% url 'index' %}">Journals</a></li> 
+          <li><a href="{% url 'planner_index' %}">Planner</a></li> 
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         {% else %}
           <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -49,22 +60,32 @@
         {% endif %}
       </ul>
     </header>
-  </body>
+  
   <main class="container">
     {% block content %}
     {% endblock %}
   </main>
+  <!-- footer -->
   <footer class="page-footer light-blue">
     <div class="right">All Rights Reserved, &copy; 2019 Team Alpha &nbsp;</div>
   </footer>
+  <!-- jquery script -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  
   <script>
     $(document).ready(function() {
         $('.sidenav').sidenav();
 
     });
+    const selectEl = document.querySelectorAll('select');
+    M.FormSelect.init(selectEl);
+    var dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
   </script>
 </body>
 </html>
