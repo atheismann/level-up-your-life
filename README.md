@@ -1,15 +1,35 @@
 # Level Up Your Life
 ### Dan Cermak, Andrew Theismann, Joseph Hunt
 
-The level of your life app is top of the line of modern-day planner app. once you create your first planner you will be able to schedule events daily, weekly. After you'll be able to click on the week view to see what events are on your schedule that you want to complete or check on the progress. We want you to be able to create a workout and assign it to yourself along with setting the levels of importance. You can also even schedule meal plans for breakfast lunch and dinner you can assign meal plans or create your meal plan. We want to give you the same ability for tasks.
-
-## Trello Board
+The Problem we Solved:
+------
+After spending hours looking through different planner apps we were unable to find an app that worked for us. We came up with the idea of the Level Up Your Life app; it's a top of the line, responsive, modern-day planner app. 
+<br>
+The planner will give you the ability to create entries such as tasks, meal plans, and workouts. You can assign the entries to a specific day, daily or weekly. Once entries are entered into the planner you will be able to view all entries by day or week, assign importance and update progress. 
 
 ## ERD
-[ERD - LucidChart](https://www.lucidchart.com/publicSegments/view/53fa32dc-5983-4d1c-9515-e894bf32c9e2/image.jpeg)
+![ERD - LucidChart](https://www.lucidchart.com/publicSegments/view/53fa32dc-5983-4d1c-9515-e894bf32c9e2/image.jpeg)
+
+## Trello Board
+[Trello Board](https://trello.com/b/bxij6mUm/p3-level-up-your-life)
 
 ## Wireframe
 [Wireframe](https://docs.google.com/drawings/d/1lz0x3mHJKITkSju0V6-0bmdw9WpmRDj2ktpHfj3ucWo/edit?usp=sharing)
 
 ## Pitch Deck
 [Pitch Deck](https://prezi.com/view/oYGYcBhg8116jjREbPZE/)
+
+## Technologies used:
+- HTML5 
+- CSS3 
+- JavaScript
+- Materialize CSS
+- Python
+- Django
+- Heroku
+
+## App images
+![Imgur]()
+![Imgur]()
+![Imgur]()
+![Imgur]()
