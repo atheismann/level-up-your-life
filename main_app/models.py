@@ -101,7 +101,7 @@ class Entry(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   
   def get_absolute_url(self):
-    return reverse('entry_detail', kwargs={'pk': self.id}) 
+    return reverse('entry_detail', kwargs={'entry_id': self.id}) 
 
   def get_week_number(self):
     return self.date.isocalendar()[1]
