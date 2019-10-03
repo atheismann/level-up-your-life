@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Task List</h1>
+<h1>Recurring Task List</h1>
 
 <form action="{% url 'task_create' %}" method="post">
         {% csrf_token %}
@@ -10,17 +10,19 @@
 </form>
 
 {% for task in task_list %}
-  <a href="{% url 'task_detail' task.id %}">
-    <div class="card">
-        <div class="card-content">
-            <span class="card-title">{{ task.title }}</span>            
-            <p>Description: {{ task.description }}</p>
-            <p>Importance: {{ task.get_importance_display }}</p>
-            <p>Recurring: {{ task.recurring }}</p>
-            <p>Progress: {{ task.get_progress_display }}</p>
-        </div>
-    </div>
-  </a>
+  {% if task.recurring == True %}
+    <a href="{% url 'task_detail' task.id %}">
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title">{{ task.title }}</span>            
+              <p>Description: {{ task.description }}</p>
+              <p>Importance: {{ task.get_importance_display }}</p>
+              <p>Recurring: {{ task.recurring }}</p>
+              <p>Progress: {{ task.get_progress_display }}</p>
+          </div>
+      </div>
+    </a>
+  {% endif %}
 {% endfor %}
 
 {% endblock %}

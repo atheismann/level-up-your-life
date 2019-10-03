@@ -19,6 +19,7 @@
           </p>
           <form action="{% url 'entry_update' entry.id %}" method="post">
           <input type="submit" class="btn" value="Edit Notes">
+          </form>
         </div>
       </div>
     </div>
@@ -122,9 +123,11 @@
               <select name="task">
                 <option value="#">Select/Create a Recurring Task</option>
                 {% for task in tasks %}
-                  {% if task.recurring == True and task in entry.assignedtasks.all or task in entry.completedtasks.all %}
-                  {% else %}
-                    <option value="{{ task.id }}">{{ task.title}}</option>
+                  {% if task.recurring == true %}
+                    {% if task in entry.assignedtasks.all or task in entry.completedtasks.all %}
+                    {% else %}
+                      <option value="{{ task.id }}">{{ task.title}}</option>
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
               <input type="submit" class="btn btn-small" value="Assign Recurring Task"> 

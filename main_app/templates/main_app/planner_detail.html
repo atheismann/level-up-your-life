@@ -11,7 +11,7 @@
   <div class="col s12">
     {% for entry in planner.entry_set.all %}
       <div class="col s12">
-        {% if entry.get_week_number == entry.current_week %}
+        {% comment %} {% if entry.get_week_number == entry.current_week %} {% endcomment %}
             <a href="{% url 'entry_detail' entry.id %}">
               <div class="card">
                 <div class="card-content">
@@ -30,7 +30,7 @@
                 </div>
               </div>
             </a>
-        {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
       </div>
     {% endfor %}
   </div>
